@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaturaLink x Skynium ECO | SAE 103</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        skynium: {
+                            dark: '#0f291e',    /* Vert forêt très sombre */
+                            main: '#166534',    /* Vert riche */
+                            light: '#dcfce7',   /* Vert très pâle */
+                            accent: '#22c55e',  /* Vert vif tech */
+                            sand: '#f3f4f6'     /* Gris/Sable tech */
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1500829243541-74b677fecc30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles pour l'effet Verre et Animations */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-dark {
+            background: rgba(15, 41, 30, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Smooth subtle leaf animation */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .float-anim {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-skynium-sand text-gray-800 antialiased overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 glass-dark transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <i class="ph-fill ph-leaf text-skynium-accent text-3xl group-hover:scale-110 transition-transform"></i>
+                <div class="flex flex-col">
+                    <span class="text-white font-bold text-xl tracking-wide leading-none">NaturaLink</span>
+                    <span class="text-gray-400 text-[10px] uppercase tracking-widest leading-none mt-1">Powered by Skynium ECO</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#projet" class="text-gray-300 hover:text-skynium-accent transition-colors text-sm font-medium">LE CONTEXTE</a>
+                <a href="#technique" class="text-gray-300 hover:text-skynium-accent transition-colors text-sm font-medium">SOLUTION TECHNIQUE</a>
+                <a href="#skynium" class="text-skynium-accent font-bold text-sm bg-white/10 px-4 py-2 rounded-full border border-skynium-accent/30 hover:bg-skynium-accent hover:text-white transition-all">
+                    PHILOSOPHIE SKYNIUM
+                </a>
+                <a href="#equipe" class="text-gray-300 hover:text-skynium-accent transition-colors text-sm font-medium">L'ÉQUIPE</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white text-2xl" onclick="toggleMenu()">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-skynium-dark p-6 border-b border-white/10 flex-col gap-4 shadow-xl">
+            <a href="#projet" class="text-gray-200 py-2 border-b border-white/5">Le Contexte</a>
+            <a href="#technique" class="text-gray-200 py-2 border-b border-white/5">Technique</a>
+            <a href="#skynium" class="text-skynium-accent py-2 font-bold">Skynium ECO</a>
+            <a href="#equipe" class="text-gray-200 py-2">L'Équipe</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image Parallax -->
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center bg-fixed"></div>
+        <!-- Overlay Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-skynium-dark/80 via-skynium-dark/60 to-skynium-sand"></div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto reveal active">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-skynium-accent text-sm font-medium mb-6">
+                <i class="ph-fill ph-plant"></i>
+                <span>Projet IUT R&T • SAE 103 • Semestre 1</span>
+            </div>
+            
+            <h1 class="font-serif text-5xl md:text-7xl text-white font-bold mb-6 leading-tight">
+                Monitoring Automatisé de la <span class="text-transparent bg-clip-text bg-gradient-to-r from-skynium-accent to-teal-400">Faune Urbaine</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light">
+                Comment suivre la biodiversité en ville sans intervention humaine ?<br>
+                Une solution de tri vidéo autonome, respectueuse et "Green IT".
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#projet" class="px-8 py-3 bg-skynium-accent text-white rounded-full font-bold hover:bg-green-600 transition-all shadow-lg shadow-green-500/30 flex items-center justify-center gap-2">
+                    Découvrir le concept <i class="ph-bold ph-arrow-down"></i>
+                </a>
+                <a href="#skynium" class="px-8 py-3 glass-panel text-skynium-dark rounded-full font-bold hover:bg-white transition-all flex items-center justify-center gap-2">
+                    Partenariat Skynium <i class="ph-fill ph-leaf text-green-700"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Floating Elements Decoration -->
+        <div class="absolute bottom-20 left-10 hidden lg:block glass-panel p-4 rounded-2xl float-anim">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                <span class="text-sm font-bold text-gray-800">Mode Veille Actif</span>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">Conso: < 1 Watt</div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: LE PROJET (Contexte Hélina) -->
+    <section id="projet" class="py-20 md:py-32 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-sm font-bold text-skynium-main uppercase tracking-widest mb-2">Contexte & Enjeux</h2>
+                    <h3 class="text-4xl font-serif font-bold text-gray-900 mb-6">Rendre visible<br>l'invisible.</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        L'urbanisation transforme nos villes. Les espèces locales tentent de survivre, mais elles sont souvent invisibles à nos yeux.
+                        Le problème actuel : suivre cette biodiversité coûte cher et demande trop de temps humain.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        <strong>NaturaLink</strong> répond à ce besoin par l'automatisation. Notre but n'est pas de tout filmer, 
+                        mais de capturer uniquement l'essentiel pour fournir des statistiques fiables aux associations (LPO) et aux municipalités.
+                    </p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0 mt-1">
+                                <i class="ph-bold ph-globe-hemisphere-east"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Enjeu Environnemental</h4>
+                                <p class="text-sm text-gray-500">Identifier les zones refuges et d'alimentation.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0 mt-1">
+                                <i class="ph-bold ph-users-three"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Enjeu Sociétal</h4>
+                                <p class="text-sm text-gray-500">Sensibiliser les citadins à la nature qui les entoure.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="relative reveal delay-200">
+                    <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl relative z-10">
+                        <img src="image.png" alt="Renard en milieu urbain" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <!-- Decorative patterns -->
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-skynium-light rounded-full blur-3xl opacity-60"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-green-200 rounded-full blur-3xl opacity-60"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SKYNIUM ECO (Philosophie) -->
+    <section id="skynium" class="py-20 bg-skynium-dark text-white relative overflow-hidden">
+        <!-- Nature background elements -->
+        <i class="ph-fill ph-leaf absolute top-10 right-10 text-white/5 text-9xl transform rotate-45"></i>
+        <i class="ph-fill ph-tree absolute bottom-0 left-20 text-white/5 text-[15rem]"></i>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-block bg-white/10 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 text-skynium-accent border border-white/10">Partenaire Officiel</div>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">Le Manifeste Skynium</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Plus qu'un sponsor, Skynium ECOGREEN nous impose une charte éthique stricte.
+                    Nous ne collectons pas de la donnée pour le profit, mais pour la protection.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-dark p-8 rounded-2xl border border-white/10 hover:border-skynium-accent/50 transition-colors reveal delay-100 group">
+                    <div class="w-14 h-14 bg-green-900/50 rounded-xl flex items-center justify-center text-skynium-accent mb-6 group-hover:bg-skynium-accent group-hover:text-white transition-all">
+                        <i class="ph-bold ph-database text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">La Diète de Données</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Le "Strict Minimum Vital". Nous refusons la collecte inutile. NaturaLink ne stocke que l'image de l'animal, rien d'autre. Pas de métadonnées superflues.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-dark p-8 rounded-2xl border border-white/10 hover:border-skynium-accent/50 transition-colors reveal delay-200 group">
+                    <div class="w-14 h-14 bg-green-900/50 rounded-xl flex items-center justify-center text-skynium-accent mb-6 group-hover:bg-skynium-accent group-hover:text-white transition-all">
+                        <i class="ph-bold ph-shield-check text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Le Sanctuaire</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Zéro vente de données. Les images capturées appartiennent à la nature et aux associations. Skynium garantit qu'aucune donnée ne sera monétisée.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-dark p-8 rounded-2xl border border-white/10 hover:border-skynium-accent/50 transition-colors reveal delay-300 group">
+                    <div class="w-14 h-14 bg-green-900/50 rounded-xl flex items-center justify-center text-skynium-accent mb-6 group-hover:bg-skynium-accent group-hover:text-white transition-all">
+                        <i class="ph-bold ph-user-focus text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">L'Humain Respecté</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Si un humain passe devant la caméra, il n'est pas une donnée. Il est flouté ou la séquence est supprimée. La confidentialité est notre priorité absolue.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: TECHNIQUE (Bédis & Jonathan) -->
+    <section id="technique" class="py-20 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2 order-2 md:order-1 reveal">
+                    <div class="bg-gray-900 rounded-xl p-4 shadow-2xl border border-gray-700 font-mono text-sm overflow-hidden">
+                        <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="text-gray-500 text-xs ml-2">detection_algo.m</span>
+                        </div>
+                        <div class="text-green-400">
+                            <p><span class="text-purple-400">% Gestion Lumière & Bruit</span></p>
+                            <p>bg_model = updateBackground(frame);</p>
+                            <p class="mt-2"><span class="text-gray-500">% Soustraction de fond</span></p>
+                            <p>diff = abs(frame - bg_model);</p>
+                            <p>thresh = imbinarize(diff, 0.15);</p>
+                            <p class="mt-2"><span class="text-blue-400">if</span> blob_size > min_animal_size</p>
+                            <p class="pl-4"><span class="text-gray-500">% C'est un animal, pas du vent</span></p>
+                            <p class="pl-4">captureHighRes();</p>
+                            <p class="pl-4">archiveSequence();</p>
+                            <p><span class="text-blue-400">end</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 order-1 md:order-2 reveal delay-100">
+                    <h2 class="text-sm font-bold text-skynium-main uppercase tracking-widest mb-2">Verrous Scientifiques</h2>
+                    <h3 class="text-4xl font-serif font-bold text-gray-900 mb-6">Filtrer le bruit,<br>Garder le signal.</h3>
+                    <p class="text-gray-600 mb-4">
+                        En extérieur, tout bouge : le vent dans les feuilles, les nuages, la pluie. Pour une caméra classique, c'est du mouvement.
+                        Pour NaturaLink, c'est du "bruit" à éliminer.
+                    </p>
+                    <div class="space-y-6 mt-8">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 mt-1">
+                                <span class="block w-2 h-2 rounded-full bg-skynium-accent"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Gestion de la Lumière</h4>
+                                <p class="text-sm text-gray-500">Filtres adaptatifs sous Matlab pour ignorer les changements brusques de luminosité (nuages).</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 mt-1">
+                                <span class="block w-2 h-2 rounded-full bg-skynium-accent"></span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Tri Automatique (Green IT)</h4>
+                                <p class="text-sm text-gray-500">Stratégie à deux niveaux : Veille basse conso -> Analyse Haute Résolution. On ne garde que l'animal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: EQUIPE (Rôles mis à jour) -->
+    <section id="equipe" class="py-20 px-6 bg-skynium-sand">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-serif font-bold mb-12 reveal">L'Équipe NaturaLink</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal delay-100">
+                <!-- Unsal -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border-2 border-skynium-main/10">
+                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
+                        <img src="unsal.jpg" class="w-full h-full object-cover opacity-80" alt="Unsal">
+                    </div>
+                    <h4 class="font-bold text-lg">Unsal</h4>
+                    <p class="text-orange-600 text-xs font-bold uppercase mb-2">Chef de Projet</p>
+                    <p class="text-gray-500 text-xs">Coordination & Communication</p>
+                </div>
+
+                <!-- Hélina -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
+                        <img src="helina.jpg" class="w-full h-full object-cover opacity-80" alt="Hélina">
+                    </div>
+                    <h4 class="font-bold text-lg">Hélina</h4>
+                    <p class="text-purple-600 text-xs font-bold uppercase mb-2">Acquisition</p>
+                    <p class="text-gray-500 text-xs">Transmission IP & Matériel</p>
+                </div>
+
+                <!-- Bédis -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
+                        <img src="bedis.jpg" class="w-full h-full object-cover opacity-80" alt="Bédis">
+                    </div>
+                    <h4 class="font-bold text-lg">Bédis</h4>
+                    <p class="text-blue-600 text-xs font-bold uppercase mb-2">Filtrage</p>
+                    <p class="text-gray-500 text-xs">Traitement du Signal</p>
+                </div>
+
+                <!-- Jonathan -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
+                        <img src="jonathan.jpeg" class="w-full h-full object-cover opacity-80" alt="Jonathan">
+                    </div>
+                    <h4 class="font-bold text-lg">Jonathan</h4>
+                    <p class="text-skynium-main text-xs font-bold uppercase mb-2">Détection</p>
+                    <p class="text-gray-500 text-xs">Algorithmes & Verrous Techniques</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-skynium-dark text-white py-10 border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <i class="ph-fill ph-leaf text-skynium-accent text-2xl"></i>
+                <span class="font-bold text-lg">NaturaLink</span>
+            </div>
+            <div class="text-gray-400 text-sm text-center md:text-right">
+                <p>&copy; 2026 Projet SAE 103 - IUT R&T.</p>
+                <p class="mt-1">Une initiative étudiante propulsée par <a href="https://skynium.fr"><span class="text-skynium-accent font-bold">Skynium ECOGREEN</span>.</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Menu Mobile Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // Animation au scroll (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Navbar transparency on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+                nav.style.background = 'rgba(15, 41, 30, 0.95)';
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.style.background = 'rgba(15, 41, 30, 0.85)';
+            }
+        });
+    </script>
+</body>
+</html>

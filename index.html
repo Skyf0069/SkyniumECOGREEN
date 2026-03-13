@@ -24,27 +24,65 @@
         @property --tertiary { syntax: '<color>'; inherits: true; initial-value: #FF8A3F; }
         @property --secondary-dark { syntax: '<color>'; inherits: true; initial-value: #D830E0; }
 
-        body, header, footer, a, button, h1, h2, h3, p, div, span, nav, ul, li, section, i {
-            transition: background-color 2.5s ease-in-out, 
-                        color 2.5s ease-in-out, 
-                        border-color 2.5s ease-in-out,
-                        --primary 2.5s ease-in-out,
-                        --secondary 2.5s ease-in-out,
-                        --tertiary 2.5s ease-in-out,
-                        --secondary-dark 2.5s ease-in-out !important;
+        @keyframes eco-colors-pulse {
+            /* État normal : Couleurs Skynium */
+            0%, 100% {
+                --primary: #1D0469;
+                --secondary: #FA5DFF;
+                --tertiary: #FF8A3F;
+                --secondary-dark: #D830E0;
+            }
+            /* État nature : Couleurs vertes/boisées */
+            40%, 60% {
+                --primary: #1E5631;       /* Violet -> Vert Forêt profond */
+                --secondary: #76BA1B;     /* Rose -> Vert Feuille clair */
+                --tertiary: #8B5A2B;      /* Orange -> Marron Bois */
+                --secondary-dark: #4C9A2A;/* Rose foncé -> Vert moyen */
+            }
         }
 
-        body.nature-mode {
-            --primary: #1E5631;       /* Violet -> Vert Forêt profond */
-            --secondary: #76BA1B;     /* Rose -> Vert Feuille clair */
-            --tertiary: #8B5A2B;      /* Orange -> Marron Bois */
-            --secondary-dark: #4C9A2A;/* Rose foncé -> Vert moyen (pour le texte) */
+        :root {
+            /* On applique l'animation à la racine : TOUT le site est synchronisé */
+            animation: eco-colors-pulse 10s infinite ease-in-out;
         }
 
-        #accueil-hero h1 {
+        @keyframes leaf-swing {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            40%, 60% { transform: rotate(15deg) scale(1.15); }
+        }
+
+        #eco-icon i {
+            animation: leaf-swing 10s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        /* 2. STYLES DES SECTIONS ECOGREEN */
+        .eco-hero {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .eco-hero h1 {
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .eco-hero p.intro {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            margin-top: 1.5rem;
+        }
+
+        .eco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
         }
 
         .eco-card {
@@ -52,20 +90,236 @@
             padding: 2.5rem; 
             border-radius: var(--border-radius); 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            border-top: 5px solid var(--primary);
         }
         
         .eco-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
+
+        .eco-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .eco-card h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .eco-card p, .eco-card ul {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .eco-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .eco-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .eco-card a {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .arena-vision {
+            background: linear-gradient(135deg, rgba(29, 4, 105, 0.05), rgba(250, 93, 255, 0.05));
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+
+        .arena-vision h2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
     </style>
 </head>
 <body>
 
+    <!-- ============================================ -->
+    <!-- LIEN D'ÉVITEMENT (visible au focus clavier)  -->
+    <!-- ============================================ -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <!-- ============================================ -->
+    <!-- BOUTON ACCESSIBILITÉ FIXE                    -->
+    <!-- ============================================ -->
+    <button 
+        id="accessibility-button" 
+        aria-label="Ouvrir le panneau d'accessibilité"
+        aria-expanded="false"
+        aria-controls="accessibility-panel"
+    >
+        <i class="fas fa-universal-access" aria-hidden="true"></i>
+    </button>
+
+    <!-- ============================================ -->
+    <!-- PANNEAU D'ACCESSIBILITÉ (latéral droit)      -->
+    <!-- ============================================ -->
+    <aside 
+        id="accessibility-panel" 
+        class="accessibility-panel"
+        role="dialog"
+        aria-labelledby="accessibility-title"
+        aria-modal="false"
+    >
+        <button class="close-btn" aria-label="Fermer le panneau d'accessibilité" id="close-panel-btn">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+
+        <h2 id="accessibility-title">Options d'accessibilité</h2>
+
+        <div class="accessibility-status" role="status" aria-live="polite">
+            <p><strong>Modes actifs :</strong> <span id="active-modes-count">Aucun</span></p>
+        </div>
+
+        <!-- SECTION 1 : Modes d'accessibilité -->
+        <section class="accessibility-section">
+            <h3>Modes d'accessibilité</h3>
+            <div class="accessibility-option" data-mode="epilepsy-safe" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode sans échec pour l'épilepsie</strong>
+                    <p class="option-desc">Atténue la couleur et supprime les clignements</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="visually-impaired" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode malvoyant</strong>
+                    <p class="option-desc">Améliore les visuels du site</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="cognitive-disability" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode handicap cognitif</strong>
+                    <p class="option-desc">Aide à se concentrer sur un contenu spécifique</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="adhd-friendly" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode adapté au TDAH</strong>
+                    <p class="option-desc">Réduit les distractions</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="screen-reader" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode Cécité</strong>
+                    <p class="option-desc">Optimisé pour lecteur d'écran</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 : Expérience lisible -->
+        <section class="accessibility-section">
+            <h3>Expérience lisible</h3>
+            <div class="slider-option">
+                <label for="font-size-slider">Taille de la police</label>
+                <div class="slider-container">
+                    <input type="range" id="font-size-slider" min="80" max="150" value="100" step="10" aria-valuemin="80" aria-valuemax="150" aria-valuenow="100" aria-label="Ajuster la taille de la police">
+                    <span id="font-size-value">100%</span>
+                </div>
+            </div>
+            <div class="slider-option">
+                <label for="line-height-slider">Hauteur de ligne</label>
+                <div class="slider-container">
+                    <input type="range" id="line-height-slider" min="1.2" max="2.5" value="1.6" step="0.1" aria-label="Ajuster la hauteur de ligne">
+                    <span id="line-height-value">1.6</span>
+                </div>
+            </div>
+            <div class="slider-option">
+                <label for="letter-spacing-slider">Espacement des lettres</label>
+                <div class="slider-container">
+                    <input type="range" id="letter-spacing-slider" min="0" max="5" value="0" step="0.5" aria-label="Ajuster l'espacement des lettres">
+                    <span id="letter-spacing-value">0px</span>
+                </div>
+            </div>
+            <div class="accessibility-option" data-mode="dyslexia-font" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Police adaptée à la dyslexie</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="highlight-headings" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Titres en surbrillance</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="highlight-links" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Liens en surbrillance</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="text-align-options">
+                <label>Alignement du texte</label>
+                <div class="button-group" role="radiogroup" aria-label="Alignement du texte">
+                    <button class="align-btn active" data-align="left" role="radio" aria-checked="true" aria-label="Aligner à gauche"><i class="fas fa-align-left" aria-hidden="true"></i></button>
+                    <button class="align-btn" data-align="center" role="radio" aria-checked="false" aria-label="Centrer"><i class="fas fa-align-center" aria-hidden="true"></i></button>
+                    <button class="align-btn" data-align="right" role="radio" aria-checked="false" aria-label="Aligner à droite"><i class="fas fa-align-right" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 : Expérience visuellement agréable -->
+        <section class="accessibility-section">
+            <h3>Expérience visuellement agréable</h3>
+            <div class="button-group" role="radiogroup" aria-label="Mode de contraste">
+                <button class="contrast-btn active" data-contrast="normal" role="radio" aria-checked="true" aria-label="Contraste normal">Normal</button>
+                <button class="contrast-btn" data-contrast="dark" role="radio" aria-checked="false" aria-label="Mode sombre">Sombre</button>
+                <button class="contrast-btn" data-contrast="light" role="radio" aria-checked="false" aria-label="Mode clair">Clair</button>
+                <button class="contrast-btn" data-contrast="high" role="radio" aria-checked="false" aria-label="Contraste élevé">Élevé</button>
+            </div>
+            <div class="accessibility-option" data-mode="high-saturation" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Haute saturation</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="low-saturation" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Faible saturation</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="monochrome" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Monochrome</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 : Orientation facile -->
+        <section class="accessibility-section">
+            <h3>Orientation facile</h3>
+            <div class="accessibility-option" data-mode="highlight-cursor" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Mettre en surbrillance le curseur</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="big-cursor-dark" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Grand curseur sombre</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="big-cursor-light" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Grand curseur clair</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <!-- BOUTON RÉINITIALISER -->
+        <button id="reset-accessibility-btn" class="reset-btn">
+            <i class="fas fa-undo" aria-hidden="true"></i> Réinitialiser tous les paramètres
+        </button>
+    </aside>
 
     <!-- ============================================ -->
     <!-- HEADER                                       -->
@@ -100,64 +354,97 @@
     <!-- CONTENU PRINCIPAL : ECOGREEN                 -->
     <!-- ============================================ -->
     <main id="main-content" role="main">
-        <section id="accueil-hero" style="text-align: center; max-width: 1000px; margin: 0 auto;">
-            
-            <div id="eco-icon" style="font-size: 4.5rem; margin-bottom: 1.5rem; transition: transform 2.5s ease-in-out;">
+        
+        <section class="eco-hero">
+            <div id="eco-icon" style="font-size: 4.5rem; margin-bottom: 1rem;">
                 <i class="fa-solid fa-leaf" style="color: var(--secondary);"></i>
             </div>
-            
             <h1>Skynium ECOGREEN</h1>
             <h2>L'innovation numérique au service de notre planète.</h2>
-            
-            <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto 3rem auto; line-height: 1.8;">
-                L'informatique ne doit plus être synonyme de gaspillage. Chez Skynium, nous sommes profondément convaincus que la technologie de demain doit être <strong>durable, responsable et respectueuse de notre environnement</strong>. C'est pourquoi nous avons lancé l'initiative ECOGREEN.
+            <p class="intro">
+                L'informatique ne doit plus être synonyme de gaspillage ou de pollution invisible. 
+                Chez Skynium, nous sommes convaincus que la technologie de demain doit être durable, 
+                responsable et respectueuse de notre environnement. Découvrez nos actions concrètes.
             </p>
+        </section>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; text-align: left;">
-                
-                <!-- Carte 1 -->
-                <div class="eco-card" style="border-top: 5px solid var(--secondary);">
-                    <div style="font-size: 2.5rem; color: var(--secondary);">
-                        <i class="fa-solid fa-recycle"></i>
-                    </div>
-                    <h3 style="color: var(--primary); font-size: 1.4rem;">Seconde Vie</h3>
-                    <p style="font-size: 1rem; color: #666; margin: 0;">
-                        Au lieu de jeter vos vieux ordinateurs ou téléphones, nous les réparons et les reconditionnons. L'obsolescence programmée n'a pas sa place dans notre vision. Chaque appareil sauvé est une victoire pour la planète.
-                    </p>
+        <!-- GRILLE DES ENGAGEMENTS -->
+        <section class="eco-grid">
+            
+            <!-- Hébergement Vert -->
+            <div class="eco-card" style="border-color: var(--tertiary);">
+                <div class="eco-card-icon" style="color: var(--tertiary);">
+                    <i class="fa-solid fa-server"></i>
                 </div>
-
-                <!-- Carte 2 -->
-                <div class="eco-card" style="border-top: 5px solid var(--tertiary);">
-                    <div style="font-size: 2.5rem; color: var(--tertiary);">
-                        <i class="fa-solid fa-server"></i>
-                    </div>
-                    <h3 style="color: var(--primary); font-size: 1.4rem;">Hébergement Vert</h3>
-                    <p style="font-size: 1rem; color: #666; margin: 0;">
-                        Nos infrastructures (notamment nos systèmes IRIS et ASTRA) et notre code sont optimisés pour consommer le strict minimum d'énergie. Nos serveurs privilégient des hébergeurs engagés dans l'énergie renouvelable.
-                    </p>
-                </div>
-
-                <!-- Carte 3 -->
-                <div class="eco-card" style="border-top: 5px solid var(--primary);">
-                    <div style="font-size: 2.5rem; color: var(--primary);">
-                        <i class="fa-solid fa-seedling"></i>
-                    </div>
-                    <h3 style="color: var(--primary); font-size: 1.4rem;">Horizon 2027</h3>
-                    <p style="font-size: 1rem; color: #666; margin: 0;">
-                        D'ici 2027, Skynium s'engage à réduire drastiquement l'empreinte carbone de ses interventions, et prévoit la mise en place d'un vaste programme de collecte des Déchets Électroniques (DEEE) directement chez vous.
-                    </p>
-                </div>
-
+                <h3>Hébergement Vert</h3>
+                <p>
+                    Nous privilégierons toujours des serveurs responsables de l'environnement. 
+                    C'est pourquoi notre écosystème Skynium est hébergé chez des partenaires fortement engagés dans la transition écologique :
+                </p>
+                <ul>
+                    <li><a href="https://corporate.ovhcloud.com/fr/sustainability/environment/" target="_blank">OVHcloud</a> : Refroidissement liquide des serveurs et réutilisation des composants.</li>
+                    <li><a href="https://www.ionos.fr/environnement" target="_blank">IONOS</a> : Datacenters alimentés à 100% par des énergies renouvelables.</li>
+                    <li><a href="https://www.infomaniak.com/fr/ecologie" target="_blank">Infomaniak</a> : Le pionnier suisse de l'hébergement écologique, compensant ses émissions à 200%.</li>
+                </ul>
             </div>
 
-            <div style="margin-top: 4rem; padding: 2rem; background-color: rgba(29, 4, 105, 0.03); border-radius: var(--border-radius); border: 1px solid var(--primary);">
-                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">Agissons ensemble !</h3>
-                <p style="font-size: 1.1rem; color: #444;">
-                    Vous avez de vieux appareils qui prennent la poussière ou vous souhaitez des conseils pour réduire votre consommation numérique ? <br><br>
-                    <strong>Contactez-nous par WhatsApp au <a href="https://wa.me/33667225452" style="font-weight: bold;">06 67 22 54 52</a>.</strong>
+            <!-- Éco-conception logicielle -->
+            <div class="eco-card" style="border-color: var(--primary);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <h3>Éco-conception logicielle</h3>
+                <p>Notre code est pensé pour minimiser son empreinte carbone :</p>
+                <ul>
+                    <li><strong>Code natif optimisé :</strong> Réduction drastique des requêtes CPU et de la consommation mémoire de vos terminaux.</li>
+                    <li><strong>Assets compressés :</strong> Utilisation d'images nouvelle génération (WebP, AVIF) et minification des scripts (-70% de poids des pages).</li>
+                    <li><strong>Données Froides :</strong> Archivage automatique et suppression des logs et emails de plus de 2 ans pour libérer l'espace en datacenter.</li>
+                    <li><strong>Dark Mode Natif :</strong> Toutes nos interfaces favorisent les modes sombres pour réduire la consommation énergétique des écrans OLED.</li>
+                </ul>
+            </div>
+
+            <!-- Mobilité & Réparation -->
+            <div class="eco-card" style="border-color: var(--secondary);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-bicycle"></i>
+                </div>
+                <h3>Mobilité & Bonus Réparation</h3>
+                <p>
+                    <strong>Mobilité douce :</strong> 90% des trajets de nos employés s'effectuent en transports en commun, à vélo ou à pied. Si la voiture est nécessaire, le covoiturage est fortement recommandé.
+                </p>
+                <p style="margin-top: 1rem;">
+                    <strong>Réparation :</strong> Prolonger la vie d'un appareil est le meilleur geste écologique. Skynium ne propose pas de changement de composants internes, mais nous diagnostiquons vos pannes et vous orientons vers le <a href="https://www.label-qualirepar.fr/" target="_blank">Bonus Réparation (QualiRépar)</a> pour réduire vos factures chez les réparateurs agréés !
                 </p>
             </div>
+
         </section>
+
+        <!-- HORIZON 2027 & ARENA -->
+        <section class="arena-vision">
+            <h2><i class="fa-solid fa-binoculars"></i> Nos Horizons Futurs</h2>
+            
+            <div style="margin-bottom: 2.5rem;">
+                <h3 style="color: var(--tertiary); font-size: 1.3rem; margin-bottom: 0.5rem;">Horizon 2027</h3>
+                <p style="color: #444; font-size: 1.1rem;">
+                    D'ici 2027, l'intégralité de l'écosystème Skynium (tant pour nos outils internes que pour les interfaces publiques de nos clients) sera 100% compatible avec le <strong>Dark Mode Automatique</strong>. Les interfaces s'adapteront intelligemment aux réglages de votre système, garantissant une économie d'énergie massive à l'échelle globale.
+                </p>
+            </div>
+
+            <div>
+                <h3 style="color: var(--secondary); font-size: 1.3rem; margin-bottom: 0.5rem;">Projet "Skynium Arena"</h3>
+                <p style="color: #444; font-size: 1.1rem; margin-bottom: 1rem;">
+                    Notre projet le plus ambitieux pour l'avenir de l'événementiel (et notre rêve d'accueillir l'Eurovision) repose sur un cahier des charges environnemental strict :
+                </p>
+                <ul style="color: #444; font-size: 1.05rem; line-height: 1.7; list-style: none; padding: 0;">
+                    <li><i class="fa-solid fa-lightbulb" style="color: var(--primary); margin-right: 8px;"></i> <strong>Scénographie Basse Conso :</strong> Parc d'éclairage 100% LED haute efficience et gestion DMX intelligente pour diviser par 10 la consommation électrique d'un spectacle standard.</li>
+                    <li><i class="fa-solid fa-building" style="color: var(--primary); margin-right: 8px;"></i> <strong>Bâti Passif & Biosourcé :</strong> Structure prévue en matériaux à faible énergie grise (bois lamellé-collé, isolants chanvre) et orientation bioclimatique pour limiter la climatisation active.</li>
+                    <li><i class="fa-solid fa-droplet" style="color: var(--primary); margin-right: 8px;"></i> <strong>Gestion Hydrique :</strong> Toiture végétalisée pour la rétention d'eau et citernes enterrées pour alimenter les sanitaires et l'arrosage des espaces verts (Zéro eau potable gaspillée).</li>
+                    <li><i class="fa-solid fa-train-tram" style="color: var(--primary); margin-right: 8px;"></i> <strong>Mobilité Spectateurs :</strong> Emplacement stratégique connecté aux réseaux de tramway/bus pour garantir que 90% du public vienne sans voiture individuelle.</li>
+                    <li><i class="fa-solid fa-microchip" style="color: var(--primary); margin-right: 8px;"></i> <strong>IA de Régulation :</strong> Une Intelligence Artificielle sera intégrée à l'arène pour réguler et optimiser la consommation d'électricité en temps réel (ne consommant que le strict nécessaire), sans jamais dégrader l'expérience utilisateur et le rendu professionnel des spectacles.</li>
+                </ul>
+            </div>
+        </section>
+
     </main>
 
     <!-- ============================================ -->
@@ -197,33 +484,11 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS ORIGINAUX -->
+    
     <script>var FreeScoutW={s:{"color":"#1d0469","position":"br","locale":"fr","require":["name","email","phone"],"id":1681224262}};(function(d,e,s){if(d.getElementById("freescout-w"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="freescout-w";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","https://support.iris.skynium.fr/modules/chat/js/widget.js?v=2503");</script>
     <script src="https://skynium.fr/ressources/accessibility.js"></script>
     <script src="https://skynium.fr/ressources/skynium-data.js"></script>
     <script src="https://skynium.fr/ressources/app.js"></script>
 
-    <!-- ============================================ -->
-    <!-- SCRIPT D'ANIMATION DES COULEURS ECOGREEN     -->
-    <!-- ============================================ -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const ecoIcon = document.getElementById('eco-icon');
-            
-            // On déclenche le changement toutes les 5 secondes (5000 millisecondes)
-            setInterval(() => {
-                // Cette classe modifie les variables CSS (--primary, --secondary, etc.)
-                // La transition douce (2.5s) est gérée par le CSS en haut du fichier
-                document.body.classList.toggle('nature-mode');
-                
-                // On fait osciller la petite feuille pour donner un côté "vivant" à la transition
-                if (document.body.classList.contains('nature-mode')) {
-                    ecoIcon.style.transform = 'scale(1.1) rotate(10deg)';
-                } else {
-                    ecoIcon.style.transform = 'scale(1) rotate(0deg)';
-                }
-            }, 5000); 
-        });
-    </script>
 </body>
 </html>

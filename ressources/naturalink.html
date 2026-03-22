@@ -1,504 +1,611 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NaturaLink x Skynium ECO | SAE 103</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-    
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>NaturaLink - Skynium ECOGREEN</title>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        skynium: {
-                            dark: '#0f291e',    /* Vert forêt très sombre */
-                            main: '#166534',    /* Vert riche */
-                            light: '#dcfce7',   /* Vert très pâle */
-                            accent: '#22c55e',  /* Vert vif tech */
-                            sand: '#f3f4f6'     /* Gris/Sable tech */
-                        }
-                    },
-                    backgroundImage: {
-                        'hero-pattern': "url('https://images.unsplash.com/photo-1500829243541-74b677fecc30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
-                    }
-                }
+    <link rel="stylesheet" href="https://skynium.fr/ressources/style.css">
+    <link rel="stylesheet" href="https://skynium.fr/ressources/fontawesome/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="https://skynium.fr/ressources/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://skynium.fr/ressources/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="https://skynium.fr/ressources/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://skynium.fr/ressources/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Skynium" />
+    <link rel="manifest" href="https://skynium.fr/ressources/favicon/site.webmanifest" />
+
+    <!-- ============================================ -->
+    <!-- STYLES SPECIFIQUES SKYNIUM ECOGREEN          -->
+    <!-- ============================================ -->
+    <style>
+        @property --primary { syntax: '<color>'; inherits: true; initial-value: #1D0469; }
+        @property --secondary { syntax: '<color>'; inherits: true; initial-value: #FA5DFF; }
+        @property --tertiary { syntax: '<color>'; inherits: true; initial-value: #FF8A3F; }
+        @property --secondary-dark { syntax: '<color>'; inherits: true; initial-value: #D830E0; }
+
+        @keyframes eco-colors-pulse {
+            /* État normal : Couleurs Skynium */
+            0%, 100% {
+                --primary: #1D0469;
+                --secondary: #FA5DFF;
+                --tertiary: #FF8A3F;
+                --secondary-dark: #D830E0;
+            }
+            /* État nature : Couleurs vertes/boisées */
+            40%, 60% {
+                --primary: #1E5631;       /* Violet -> Vert Forêt profond */
+                --secondary: #76BA1B;     /* Rose -> Vert Feuille clair */
+                --tertiary: #8B5A2B;      /* Orange -> Marron Bois */
+                --secondary-dark: #4C9A2A;/* Rose foncé -> Vert moyen */
             }
         }
-    </script>
 
-    <style>
-        /* Custom Styles pour l'effet Verre et Animations */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        :root {
+            animation: eco-colors-pulse 10s infinite ease-in-out;
         }
 
-        .glass-dark {
-            background: rgba(15, 41, 30, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        @keyframes leaf-swing {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            40%, 60% { transform: rotate(15deg) scale(1.15); }
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+        #eco-icon i {
+            animation: leaf-swing 10s infinite ease-in-out;
+            display: inline-block;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .eco-hero {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem auto;
+            padding-top: 2rem;
+        }
+
+        .eco-hero h1 {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .eco-hero p.intro {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            margin-top: 1.5rem;
+        }
+
+        .eco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .eco-card {
+            background: var(--white); 
+            padding: 2.5rem; 
+            border-radius: var(--border-radius); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-top: 5px solid var(--primary);
         }
         
-        /* Smooth subtle leaf animation */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+        .eco-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .float-anim {
-            animation: float 4s ease-in-out infinite;
+
+        .eco-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
+
+        .eco-card h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .eco-card p, .eco-card ul {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .eco-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .eco-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .arena-vision {
+            background: linear-gradient(135deg, rgba(29, 4, 105, 0.05), rgba(250, 93, 255, 0.05));
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+
+        .arena-vision h2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .badge-odd {
+            display: inline-block;
+            background: var(--tertiary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+
     </style>
 </head>
-<body class="bg-skynium-sand text-gray-800 antialiased overflow-x-hidden">
+<body>
 
-    <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 glass-dark transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-2 group">
-                <i class="ph-fill ph-leaf text-skynium-accent text-3xl group-hover:scale-110 transition-transform"></i>
-                <div class="flex flex-col">
-                    <span class="text-white font-bold text-xl tracking-wide leading-none">NaturaLink</span>
-                    <span class="text-gray-400 text-[10px] uppercase tracking-widest leading-none mt-1">Powered by Skynium ECO</span>
+    <!-- ============================================ -->
+    <!-- LIEN D'ÉVITEMENT (visible au focus clavier)  -->
+    <!-- ============================================ -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <!-- ============================================ -->
+    <!-- BOUTON ACCESSIBILITÉ FIXE                    -->
+    <!-- ============================================ -->
+    <button 
+        id="accessibility-button" 
+        aria-label="Ouvrir le panneau d'accessibilité"
+        aria-expanded="false"
+        aria-controls="accessibility-panel"
+    >
+        <i class="fas fa-universal-access" aria-hidden="true"></i>
+    </button>
+
+    <!-- ============================================ -->
+    <!-- PANNEAU D'ACCESSIBILITÉ (latéral droit)      -->
+    <!-- ============================================ -->
+    <aside 
+        id="accessibility-panel" 
+        class="accessibility-panel"
+        role="dialog"
+        aria-labelledby="accessibility-title"
+        aria-modal="false"
+    >
+        <button class="close-btn" aria-label="Fermer le panneau d'accessibilité" id="close-panel-btn">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+
+        <h2 id="accessibility-title">Options d'accessibilité</h2>
+
+        <div class="accessibility-status" role="status" aria-live="polite">
+            <p><strong>Modes actifs :</strong> <span id="active-modes-count">Aucun</span></p>
+        </div>
+
+        <!-- SECTION 1 : Modes d'accessibilité -->
+        <section class="accessibility-section">
+            <h3>Modes d'accessibilité</h3>
+            <div class="accessibility-option" data-mode="epilepsy-safe" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode sans échec pour l'épilepsie</strong>
+                    <p class="option-desc">Atténue la couleur et supprime les clignements</p>
                 </div>
-            </a>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#projet" class="text-gray-300 hover:text-skynium-accent transition-colors text-sm font-medium">LE CONTEXTE</a>
-                <a href="#technique" class="text-gray-300 hover:text-skynium-accent transition-colors text-sm font-medium">SOLUTION TECHNIQUE</a>
-                <a href="#skynium" class="text-skynium-accent font-bold text-sm bg-white/10 px-4 py-2 rounded-full border border-skynium-accent/30 hover:bg-skynium-accent hover:text-white transition-all">
-                    PHILOSOPHIE SKYNIUM
-                </a>
-                <a href="#equipe" class="text-gray-300 hover:text-skynium-accent transition-colors text-sm font-medium">L'ÉQUIPE</a>
+                <div class="toggle-switch" aria-hidden="true"></div>
             </div>
+            <div class="accessibility-option" data-mode="visually-impaired" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode malvoyant</strong>
+                    <p class="option-desc">Améliore les visuels du site</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="cognitive-disability" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode handicap cognitif</strong>
+                    <p class="option-desc">Aide à se concentrer sur un contenu spécifique</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="adhd-friendly" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode adapté au TDAH</strong>
+                    <p class="option-desc">Réduit les distractions</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="screen-reader" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode Cécité</strong>
+                    <p class="option-desc">Optimisé pour lecteur d'écran</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
 
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden text-white text-2xl" onclick="toggleMenu()">
-                <i class="ph ph-list"></i>
+        <!-- SECTION 2 : Expérience lisible -->
+        <section class="accessibility-section">
+            <h3>Expérience lisible</h3>
+            <div class="slider-option">
+                <label for="font-size-slider">Taille de la police</label>
+                <div class="slider-container">
+                    <input type="range" id="font-size-slider" min="80" max="150" value="100" step="10" aria-valuemin="80" aria-valuemax="150" aria-valuenow="100" aria-label="Ajuster la taille de la police">
+                    <span id="font-size-value">100%</span>
+                </div>
+            </div>
+            <div class="slider-option">
+                <label for="line-height-slider">Hauteur de ligne</label>
+                <div class="slider-container">
+                    <input type="range" id="line-height-slider" min="1.2" max="2.5" value="1.6" step="0.1" aria-label="Ajuster la hauteur de ligne">
+                    <span id="line-height-value">1.6</span>
+                </div>
+            </div>
+            <div class="slider-option">
+                <label for="letter-spacing-slider">Espacement des lettres</label>
+                <div class="slider-container">
+                    <input type="range" id="letter-spacing-slider" min="0" max="5" value="0" step="0.5" aria-label="Ajuster l'espacement des lettres">
+                    <span id="letter-spacing-value">0px</span>
+                </div>
+            </div>
+            <div class="accessibility-option" data-mode="dyslexia-font" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Police adaptée à la dyslexie</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="highlight-headings" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Titres en surbrillance</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="highlight-links" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Liens en surbrillance</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="text-align-options">
+                <label>Alignement du texte</label>
+                <div class="button-group" role="radiogroup" aria-label="Alignement du texte">
+                    <button class="align-btn active" data-align="left" role="radio" aria-checked="true" aria-label="Aligner à gauche"><i class="fas fa-align-left" aria-hidden="true"></i></button>
+                    <button class="align-btn" data-align="center" role="radio" aria-checked="false" aria-label="Centrer"><i class="fas fa-align-center" aria-hidden="true"></i></button>
+                    <button class="align-btn" data-align="right" role="radio" aria-checked="false" aria-label="Aligner à droite"><i class="fas fa-align-right" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 : Expérience visuellement agréable -->
+        <section class="accessibility-section">
+            <h3>Expérience visuellement agréable</h3>
+            <div class="button-group" role="radiogroup" aria-label="Mode de contraste">
+                <button class="contrast-btn active" data-contrast="normal" role="radio" aria-checked="true" aria-label="Contraste normal">Normal</button>
+                <button class="contrast-btn" data-contrast="dark" role="radio" aria-checked="false" aria-label="Mode sombre">Sombre</button>
+                <button class="contrast-btn" data-contrast="light" role="radio" aria-checked="false" aria-label="Mode clair">Clair</button>
+                <button class="contrast-btn" data-contrast="high" role="radio" aria-checked="false" aria-label="Contraste élevé">Élevé</button>
+            </div>
+            <div class="accessibility-option" data-mode="high-saturation" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Haute saturation</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="low-saturation" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Faible saturation</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="monochrome" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Monochrome</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 : Orientation facile -->
+        <section class="accessibility-section">
+            <h3>Orientation facile</h3>
+            <div class="accessibility-option" data-mode="highlight-cursor" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Mettre en surbrillance le curseur</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="big-cursor-dark" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Grand curseur sombre</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="big-cursor-light" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Grand curseur clair</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <!-- BOUTON RÉINITIALISER -->
+        <button id="reset-accessibility-btn" class="reset-btn">
+            <i class="fas fa-undo" aria-hidden="true"></i> Réinitialiser tous les paramètres
+        </button>
+    </aside>
+
+    <!-- ============================================ -->
+    <!-- HEADER                                       -->
+    <!-- ============================================ -->
+    <header role="banner">
+        <div>
+            <img src="https://skynium.fr/ressources/logo.png" alt="Skynium - Retour à l'accueil"> 
+            <a href="index.html"><p>SKYNIUM ECOGREEN</p></a>
+        </div>
+
+        <nav role="navigation" aria-label="Navigation principale">
+            <ul id="main-nav">
+                <li><a href="https://skynium.fr/index.html">Accueil</a></li>
+                <li><a href="https://skynium.fr/ecogreen.html">EcoGreen</a></li>
+                <li><a href="#" style="color: var(--secondary); font-weight: bold;">Projet NaturaLink</a></li>
+                <li><a href="https://skynium.fr/apropos.html">À propos</a></li>
+            </ul>
+            <button id="mobile-menu-icon" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="main-nav">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
             </button>
-        </div>
-        
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-skynium-dark p-6 border-b border-white/10 flex-col gap-4 shadow-xl">
-            <a href="#projet" class="text-gray-200 py-2 border-b border-white/5">Le Contexte</a>
-            <a href="#technique" class="text-gray-200 py-2 border-b border-white/5">Technique</a>
-            <a href="#skynium" class="text-skynium-accent py-2 font-bold">Skynium ECO</a>
-            <a href="#equipe" class="text-gray-200 py-2">L'Équipe</a>
-        </div>
-    </nav>
-
-    <!-- HERO SECTION -->
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Image Parallax -->
-        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center bg-fixed"></div>
-        <!-- Overlay Gradient -->
-        <div class="absolute inset-0 bg-gradient-to-b from-skynium-dark/80 via-skynium-dark/60 to-skynium-sand"></div>
-
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto reveal active">
-            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-skynium-accent text-sm font-medium mb-6">
-                <i class="ph-fill ph-plant"></i>
-                <span>Projet IUT R&T • SAE 103 • Semestre 1</span>
-            </div>
-            
-            <h1 class="font-serif text-5xl md:text-7xl text-white font-bold mb-6 leading-tight">
-                Monitoring Automatisé de la <span class="text-transparent bg-clip-text bg-gradient-to-r from-skynium-accent to-teal-400">Faune Urbaine</span>
-            </h1>
-            
-            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-light">
-                Comment suivre la biodiversité en ville sans intervention humaine ?<br>
-                Une solution de tri vidéo autonome, respectueuse et "Green IT".
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#projet" class="px-8 py-3 bg-skynium-accent text-white rounded-full font-bold hover:bg-green-600 transition-all shadow-lg shadow-green-500/30 flex items-center justify-center gap-2">
-                    Découvrir le concept <i class="ph-bold ph-arrow-down"></i>
-                </a>
-                <a href="#skynium" class="px-8 py-3 glass-panel text-skynium-dark rounded-full font-bold hover:bg-white transition-all flex items-center justify-center gap-2">
-                    Partenariat Skynium <i class="ph-fill ph-leaf text-green-700"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Floating Elements Decoration -->
-        <div class="absolute bottom-20 left-10 hidden lg:block glass-panel p-4 rounded-2xl float-anim">
-            <div class="flex items-center gap-3">
-                <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                <span class="text-sm font-bold text-gray-800">Mode Veille Actif</span>
-            </div>
-            <div class="text-xs text-gray-500 mt-1">Conso: < 1 Watt</div>
-        </div>
+        </nav>
     </header>
 
-    <section id="concept" class="py-20 px-6 bg-white relative">
-        <div class="max-w-6xl mx-auto">
-            
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <h2 class="text-sm font-bold text-skynium-main uppercase tracking-widest mb-2">La Problématique Réelle</h2>
-                <h3 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-6">
-                    Pourquoi avons-nous créé NaturaLink ?
-                </h3>
-                <p class="text-lg text-gray-600 leading-relaxed">
-                    Aujourd'hui, pour étudier la faune en ville, il n'y a que deux solutions : payer quelqu'un pour attendre des heures (trop cher) ou placer une caméra qui filme 24h/24 (trop long à analyser).
+    <!-- ============================================ -->
+    <!-- CONTENU PRINCIPAL : NATURALINK               -->
+    <!-- ============================================ -->
+    <main id="main-content" role="main" style="padding: 0 20px;">
+        
+        <section class="eco-hero">
+            <div class="badge-odd">Projet IUT R&T • SAE 103 • Semestre 1</div>
+            <div id="eco-icon" style="font-size: 4.5rem; margin-bottom: 1rem;">
+                <i class="fa-solid fa-paw" style="color: var(--secondary);"></i>
+            </div>
+            <h1>NaturaLink</h1>
+            <h2>Monitoring Automatisé de la Faune Urbaine</h2>
+            <p class="intro">
+                Comment suivre la biodiversité en ville sans intervention humaine ?<br>
+                <strong>NaturaLink</strong> est une solution de tri vidéo autonome, respectueuse et "Green IT", propulsée par la philosophie Skynium ECOGREEN.
+            </p>
+        </section>
+
+        <!-- SECTION 1 : LA PROBLEMATIQUE -->
+        <h2 style="color: var(--primary); font-size: 2rem; text-align: center; margin-bottom: 2rem;">1. La Problématique Réelle</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto; color: #555; font-size: 1.1rem;">
+            Aujourd'hui, pour étudier la faune en ville, il n'y a que deux solutions : payer quelqu'un pour attendre des heures (trop cher) ou placer une caméra qui filme 24h/24 (trop long à analyser). <strong>Résultat : On se retrouve avec 10 heures de vidéo de "feuilles qui bougent" pour 10 secondes d'apparition d'un animal.</strong>
+        </p>
+
+        <section class="eco-grid">
+            <div class="eco-card" style="border-color: #555;">
+                <div class="eco-card-icon" style="color: #555;">
+                    <i class="fa-solid fa-video"></i>
+                </div>
+                <h3>L'Observation</h3>
+                <p>
+                    La caméra IP est posée en extérieur. Elle filme en continu, exposée au vent, à la pluie et aux changements de lumière, générant d'énormes quantités de données inutiles.
                 </p>
-                <p class="text-lg text-skynium-main font-bold mt-4">
-                    Résultat : On se retrouve avec 10 heures de vidéo de "feuilles qui bougent" pour 10 secondes d'apparition d'un animal.
+            </div>
+
+            <div class="eco-card" style="border-color: var(--secondary); transform: scale(1.05); z-index: 1; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3>Le Tri Intelligent (NaturaLink)</h3>
+                <p>
+                    C'est là que nous intervenons. Notre code Matlab analyse l'image en temps réel :
+                </p>
+                <ul>
+                    <li><strong>C'est une branche ?</strong> ➔ Poubelle.</li>
+                    <li><strong>C'est un renard ?</strong> ➔ On garde !</li>
+                </ul>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--primary);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <h3>Le Résultat Utile</h3>
+                <p>
+                    Au lieu de livrer 24h de vidéo lourde à stocker et à visionner, nous livrons un dossier contenant uniquement les 5 minutes d'activité animale réelle (98% de temps gagné).
                 </p>
             </div>
+        </section>
 
-            <div class="grid md:grid-cols-3 gap-8 relative">
-                <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gray-100 -z-10"></div>
-
-                <div class="bg-skynium-sand p-8 rounded-2xl border border-gray-100 text-center reveal hover:-translate-y-2 transition-transform duration-300">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border-4 border-white text-gray-400">
-                        <i class="ph-duotone ph-video-camera text-4xl"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900 mb-3">1. L'Observation</h4>
-                    <p class="text-gray-600 text-sm">
-                        La caméra IP est posée en extérieur. Elle filme en continu, exposée au vent, à la pluie et aux changements de lumière.
+        <!-- SECTION 2 : CONTEXTE ET ENJEUX -->
+        <section class="arena-vision" style="border-color: var(--tertiary);">
+            <h2 style="color: var(--tertiary);"><i class="fa-solid fa-globe"></i> Rendre visible l'invisible</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
+                <div style="flex: 1; min-width: 300px;">
+                    <p style="color: #444; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                        L'urbanisation transforme nos villes. Les espèces locales tentent de survivre, mais elles sont souvent invisibles à nos yeux. Notre but n'est pas de tout filmer, mais de capturer uniquement l'essentiel pour fournir des statistiques fiables aux associations (LPO) et aux municipalités.
                     </p>
-                </div>
-
-                <div class="bg-white p-8 rounded-2xl border-2 border-skynium-accent/20 text-center reveal delay-100 shadow-xl relative transform scale-105">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-skynium-accent text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                        Notre Innovation
-                    </div>
-                    <div class="w-20 h-20 bg-skynium-main rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg border-4 border-white text-white">
-                        <i class="ph-duotone ph-brain text-4xl"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-skynium-main mb-3">2. Le Tri Intelligent</h4>
-                    <p class="text-gray-600 text-sm">
-                        C'est là que NaturaLink intervient. Notre code Matlab analyse l'image en temps réel.
-                        <br><br>
-                        <span class="font-bold text-skynium-dark">C'est une branche ?</span> ➔ Poubelle.<br>
-                        <span class="font-bold text-skynium-dark">C'est un renard ?</span> ➔ On garde !
-                    </p>
-                </div>
-
-                <div class="bg-skynium-sand p-8 rounded-2xl border border-gray-100 text-center reveal delay-200 hover:-translate-y-2 transition-transform duration-300">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border-4 border-white text-skynium-accent">
-                        <i class="ph-duotone ph-folder-star text-4xl"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-900 mb-3">3. Le Résultat Utile</h4>
-                    <p class="text-gray-600 text-sm">
-                        Au lieu de livrer 24h de vidéo, nous livrons un dossier contenant uniquement les 5 minutes d'activité animale réelle.
-                    </p>
-                </div>
-            </div>
-
-            <div class="mt-16 bg-skynium-dark rounded-2xl p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8 reveal">
-                <div class="flex-1">
-                    <h4 class="text-2xl font-serif font-bold mb-2">Concrètement ?</h4>
-                    <p class="text-gray-300">
-                        NaturaLink transforme une tâche humaine fastidieuse et coûteuse en un processus automatique, fiable et respectueux de la vie privée.
-                    </p>
-                </div>
-                <div class="flex items-center gap-6 text-center md:text-left">
-                    <div>
-                        <div class="text-3xl font-bold text-skynium-accent">98%</div>
-                        <div class="text-xs text-gray-400 uppercase tracking-wider">de temps gagné</div>
-                    </div>
-                    <div class="w-px h-12 bg-white/20"></div>
-                    <div>
-                        <div class="text-3xl font-bold text-skynium-accent">24/7</div>
-                        <div class="text-xs text-gray-400 uppercase tracking-wider">Autonomie</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 1: LE PROJET (Contexte Hélina) -->
-    <section id="projet" class="py-20 md:py-32 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="reveal">
-                    <h2 class="text-sm font-bold text-skynium-main uppercase tracking-widest mb-2">Contexte & Enjeux</h2>
-                    <h3 class="text-4xl font-serif font-bold text-gray-900 mb-6">Rendre visible<br>l'invisible.</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        L'urbanisation transforme nos villes. Les espèces locales tentent de survivre, mais elles sont souvent invisibles à nos yeux.
-                        Le problème actuel : suivre cette biodiversité coûte cher et demande trop de temps humain.
-                    </p>
-                    <p class="text-gray-600 mb-8 leading-relaxed">
-                        <strong>NaturaLink</strong> répond à ce besoin par l'automatisation. Notre but n'est pas de tout filmer, 
-                        mais de capturer uniquement l'essentiel pour fournir des statistiques fiables aux associations (LPO) et aux municipalités.
-                    </p>
-                    
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0 mt-1">
-                                <i class="ph-bold ph-globe-hemisphere-east"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">Enjeu Environnemental</h4>
-                                <p class="text-sm text-gray-500">Identifier les zones refuges et d'alimentation.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0 mt-1">
-                                <i class="ph-bold ph-users-three"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-800">Enjeu Sociétal</h4>
-                                <p class="text-sm text-gray-500">Sensibiliser les citadins à la nature qui les entoure.</p>
-                            </div>
-                        </li>
+                    <ul style="color: #444; font-size: 1.05rem; line-height: 1.8; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-leaf" style="color: var(--tertiary); margin-right: 10px;"></i> <strong>Enjeu Environnemental :</strong> Identifier les zones refuges et d'alimentation.</li>
+                        <li><i class="fa-solid fa-users" style="color: var(--tertiary); margin-right: 10px;"></i> <strong>Enjeu Sociétal :</strong> Sensibiliser les citadins à la nature qui les entoure.</li>
                     </ul>
                 </div>
-                
-                <div class="relative reveal delay-200">
-                    <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl relative z-10">
-                        <img src="image.png" alt="Renard en milieu urbain" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                <div style="flex: 1; min-width: 300px; text-align: center;">
+                    <div style="width: 100%; max-width: 400px; aspect-ratio: 1; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 4px solid white;">
+                        <!-- Remplacer par src="image.png" -->
+                        <img src="https://images.unsplash.com/photo-1552528148-73b0a701e8fb?auto=format&fit=crop&q=80&w=800" alt="Renard en milieu urbain" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    <!-- Decorative patterns -->
-                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-skynium-light rounded-full blur-3xl opacity-60"></div>
-                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-green-200 rounded-full blur-3xl opacity-60"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SECTION 2: SKYNIUM ECO (Philosophie) -->
-    <section id="skynium" class="py-20 bg-skynium-dark text-white relative overflow-hidden">
-        <!-- Nature background elements -->
-        <i class="ph-fill ph-leaf absolute top-10 right-10 text-white/5 text-9xl transform rotate-45"></i>
-        <i class="ph-fill ph-tree absolute bottom-0 left-20 text-white/5 text-[15rem]"></i>
+        <!-- SECTION 3 : LE MANIFESTE SKYNIUM -->
+        <h2 style="color: var(--primary); font-size: 2rem; text-align: center; margin: 4rem 0 2rem 0;">2. Le Manifeste Skynium</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto; color: #555; font-size: 1.1rem;">
+            Plus qu'un simple partenaire, <strong>Skynium ECOGREEN</strong> impose au projet NaturaLink une charte éthique stricte. Nous ne collectons pas de la donnée pour le profit, mais pour la protection.
+        </p>
 
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16 reveal">
-                <div class="inline-block bg-white/10 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 text-skynium-accent border border-white/10">Partenaire Officiel</div>
-                <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">Le Manifeste Skynium</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">
-                    Plus qu'un sponsor, Skynium ECOGREEN nous impose une charte éthique stricte.
-                    Nous ne collectons pas de la donnée pour le profit, mais pour la protection.
+        <section class="eco-grid">
+            <div class="eco-card" style="border-color: #0153D4; background-color: rgba(1, 83, 212, 0.02);">
+                <div class="eco-card-icon" style="color: #0153D4;">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <h3>La Diète de Données</h3>
+                <p>
+                    Le "Strict Minimum Vital". Nous refusons la collecte inutile. NaturaLink ne stocke que l'image de l'animal, rien d'autre. Pas de métadonnées superflues pour soulager les datacenters.
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="glass-dark p-8 rounded-2xl border border-white/10 hover:border-skynium-accent/50 transition-colors reveal delay-100 group">
-                    <div class="w-14 h-14 bg-green-900/50 rounded-xl flex items-center justify-center text-skynium-accent mb-6 group-hover:bg-skynium-accent group-hover:text-white transition-all">
-                        <i class="ph-bold ph-database text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">La Diète de Données</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Le "Strict Minimum Vital". Nous refusons la collecte inutile. NaturaLink ne stocke que l'image de l'animal, rien d'autre. Pas de métadonnées superflues.
-                    </p>
+            <div class="eco-card" style="border-color: var(--primary); background-color: rgba(29, 4, 105, 0.02);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="glass-dark p-8 rounded-2xl border border-white/10 hover:border-skynium-accent/50 transition-colors reveal delay-200 group">
-                    <div class="w-14 h-14 bg-green-900/50 rounded-xl flex items-center justify-center text-skynium-accent mb-6 group-hover:bg-skynium-accent group-hover:text-white transition-all">
-                        <i class="ph-bold ph-shield-check text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Le Sanctuaire</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Zéro vente de données. Les images capturées appartiennent à la nature et aux associations. Skynium garantit qu'aucune donnée ne sera monétisée.
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass-dark p-8 rounded-2xl border border-white/10 hover:border-skynium-accent/50 transition-colors reveal delay-300 group">
-                    <div class="w-14 h-14 bg-green-900/50 rounded-xl flex items-center justify-center text-skynium-accent mb-6 group-hover:bg-skynium-accent group-hover:text-white transition-all">
-                        <i class="ph-bold ph-user-focus text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">L'Humain Respecté</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Si un humain passe devant la caméra, il n'est pas une donnée. Il est flouté ou la séquence est supprimée. La confidentialité est notre priorité absolue.
-                    </p>
-                </div>
+                <h3>Le Sanctuaire</h3>
+                <p>
+                    Zéro revente de données. Les images capturées appartiennent à la nature et aux associations. Skynium garantit qu'aucune donnée issue de NaturaLink ne sera monétisée.
+                </p>
             </div>
-        </div>
-    </section>
 
-    <!-- SECTION 3: TECHNIQUE (Bédis & Jonathan) -->
-    <section id="technique" class="py-20 px-6 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row gap-12 items-center">
-                <div class="md:w-1/2 order-2 md:order-1 reveal">
-                    <div class="bg-gray-900 rounded-xl p-4 shadow-2xl border border-gray-700 font-mono text-sm overflow-hidden">
-                        <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            <span class="text-gray-500 text-xs ml-2">detection_algo.m</span>
-                        </div>
-                        <div class="text-green-400">
-                            <p><span class="text-purple-400">% Gestion Lumière & Bruit</span></p>
-                            <p>bg_model = updateBackground(frame);</p>
-                            <p class="mt-2"><span class="text-gray-500">% Soustraction de fond</span></p>
-                            <p>diff = abs(frame - bg_model);</p>
-                            <p>thresh = imbinarize(diff, 0.15);</p>
-                            <p class="mt-2"><span class="text-blue-400">if</span> blob_size > min_animal_size</p>
-                            <p class="pl-4"><span class="text-gray-500">% C'est un animal, pas du vent</span></p>
-                            <p class="pl-4">captureHighRes();</p>
-                            <p class="pl-4">archiveSequence();</p>
-                            <p><span class="text-blue-400">end</span></p>
-                        </div>
-                    </div>
+            <div class="eco-card" style="border-color: var(--secondary); background-color: rgba(250, 93, 255, 0.02);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-user-shield"></i>
                 </div>
-                
-                <div class="md:w-1/2 order-1 md:order-2 reveal delay-100">
-                    <h2 class="text-sm font-bold text-skynium-main uppercase tracking-widest mb-2">Verrous Scientifiques</h2>
-                    <h3 class="text-4xl font-serif font-bold text-gray-900 mb-6">Filtrer le bruit,<br>Garder le signal.</h3>
-                    <p class="text-gray-600 mb-4">
-                        En extérieur, tout bouge : le vent dans les feuilles, les nuages, la pluie. Pour une caméra classique, c'est du mouvement.
-                        Pour NaturaLink, c'est du "bruit" à éliminer.
+                <h3>L'Humain Respecté</h3>
+                <p>
+                    Si un humain passe devant la caméra, il n'est pas une donnée. Il est flouté ou la séquence est immédiatement supprimée à la source. La confidentialité est notre priorité absolue.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 4 : TECHNIQUE -->
+        <section class="arena-vision" style="margin-bottom: 4rem;">
+            <h2><i class="fa-solid fa-microchip"></i> Verrous Scientifiques & Technique</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="color: var(--primary); font-size: 1.4rem; margin-bottom: 1rem;">Filtrer le bruit, garder le signal.</h3>
+                    <p style="color: #444; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem;">
+                        En extérieur, tout bouge : le vent dans les feuilles, les nuages, la pluie. Pour une caméra classique, c'est du mouvement. Pour NaturaLink, c'est du "bruit" à éliminer.
                     </p>
-                    <div class="space-y-6 mt-8">
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 mt-1">
-                                <span class="block w-2 h-2 rounded-full bg-skynium-accent"></span>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">Gestion de la Lumière</h4>
-                                <p class="text-sm text-gray-500">Filtres adaptatifs sous Matlab pour ignorer les changements brusques de luminosité (nuages).</p>
-                            </div>
+                    <ul style="color: #444; font-size: 1.05rem; line-height: 1.8; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-sun" style="color: var(--secondary); margin-right: 10px;"></i> <strong>Gestion de la Lumière :</strong> Filtres adaptatifs sous Matlab pour ignorer les changements brusques de luminosité.</li>
+                        <li><i class="fa-solid fa-bolt" style="color: var(--secondary); margin-right: 10px;"></i> <strong>Stratégie Green IT :</strong> Veille basse consommation, déclenchement de l'analyse Haute Résolution uniquement si la forme correspond.</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <!-- Bloc Code façon IDE -->
+                    <div class="code-block">
+                        <div style="border-bottom: 1px solid #444; padding-bottom: 0.5rem; margin-bottom: 1rem; display: flex; gap: 8px;">
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></span>
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></span>
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></span>
+                            <span style="margin-left: 10px; color: #888; font-size: 0.8rem;">detection_algo.m</span>
                         </div>
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 mt-1">
-                                <span class="block w-2 h-2 rounded-full bg-skynium-accent"></span>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">Tri Automatique (Green IT)</h4>
-                                <p class="text-sm text-gray-500">Stratégie à deux niveaux : Veille basse conso -> Analyse Haute Résolution. On ne garde que l'animal.</p>
-                            </div>
-                        </div>
+                        <p><span style="color: #6a9955;">% Gestion Lumière & Bruit</span></p>
+                        <p style="color: #dcdcaa;">bg_model = <span style="color: #4ec9b0;">updateBackground</span>(frame);</p>
+                        <br>
+                        <p><span style="color: #6a9955;">% Soustraction de fond</span></p>
+                        <p style="color: #9cdcfe;">diff = <span style="color: #4ec9b0;">abs</span>(frame - bg_model);</p>
+                        <p style="color: #9cdcfe;">thresh = <span style="color: #4ec9b0;">imbinarize</span>(diff, <span style="color: #b5cea8;">0.15</span>);</p>
+                        <br>
+                        <p><span style="color: #c586c0;">if</span> blob_size > min_animal_size</p>
+                        <p style="padding-left: 1rem;"><span style="color: #6a9955;">% C'est un animal, pas du vent</span></p>
+                        <p style="padding-left: 1rem; color: #dcdcaa;">captureHighRes();</p>
+                        <p style="padding-left: 1rem; color: #dcdcaa;">archiveSequence();</p>
+                        <p><span style="color: #c586c0;">end</span></p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SECTION 4: EQUIPE (Rôles mis à jour) -->
-    <section id="equipe" class="py-20 px-6 bg-skynium-sand">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-serif font-bold mb-12 reveal">L'Équipe NaturaLink</h2>
+        <!-- SECTION 5 : EQUIPE -->
+        <h2 style="color: var(--primary); font-size: 2rem; text-align: center; margin: 4rem 0 2rem 0;">3. L'Équipe NaturaLink</h2>
+        <section class="eco-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 4rem;">
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal delay-100">
-                <!-- Unsal -->
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border-2 border-skynium-main/10">
-                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
-                        <img src="unsal.jpg" class="w-full h-full object-cover opacity-80" alt="Unsal">
-                    </div>
-                    <h4 class="font-bold text-lg">Unsal</h4>
-                    <p class="text-orange-600 text-xs font-bold uppercase mb-2">Chef de Projet</p>
-                    <p class="text-gray-500 text-xs">Coordination & Communication</p>
+            <div class="eco-card" style="text-align: center; align-items: center; border-color: var(--tertiary);">
+                <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: 0.5rem; border: 3px solid var(--tertiary);">
+                    <img src="unsal.jpg" alt="Unsal" style="width: 100%; height: 100%; object-fit: cover; background: #eee;">
                 </div>
-
-                <!-- Hélina -->
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
-                        <img src="helina.jpg" class="w-full h-full object-cover opacity-80" alt="Hélina">
-                    </div>
-                    <h4 class="font-bold text-lg">Hélina</h4>
-                    <p class="text-purple-600 text-xs font-bold uppercase mb-2">Acquisition</p>
-                    <p class="text-gray-500 text-xs">Transmission IP & Matériel</p>
-                </div>
-
-                <!-- Bédis -->
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
-                        <img src="bedis.jpg" class="w-full h-full object-cover opacity-80" alt="Bédis">
-                    </div>
-                    <h4 class="font-bold text-lg">Bédis</h4>
-                    <p class="text-blue-600 text-xs font-bold uppercase mb-2">Filtrage</p>
-                    <p class="text-gray-500 text-xs">Traitement du Signal</p>
-                </div>
-
-                <!-- Jonathan -->
-                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
-                        <img src="jonathan.jpeg" class="w-full h-full object-cover opacity-80" alt="Jonathan">
-                    </div>
-                    <h4 class="font-bold text-lg">Jonathan</h4>
-                    <p class="text-skynium-main text-xs font-bold uppercase mb-2">Détection</p>
-                    <p class="text-gray-500 text-xs">Algorithmes & Verrous Techniques</p>
-                </div>
+                <h3 style="margin: 0;">Unsal</h3>
+                <p style="color: var(--tertiary); font-weight: bold; font-size: 0.85rem; text-transform: uppercase;">Chef de Projet</p>
+                <p style="font-size: 0.95rem;">Coordination & Communication</p>
             </div>
+
+            <div class="eco-card" style="text-align: center; align-items: center; border-color: var(--secondary);">
+                <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: 0.5rem; border: 3px solid var(--secondary);">
+                    <img src="helina.jpg" alt="Hélina" style="width: 100%; height: 100%; object-fit: cover; background: #eee;">
+                </div>
+                <h3 style="margin: 0;">Hélina</h3>
+                <p style="color: var(--secondary); font-weight: bold; font-size: 0.85rem; text-transform: uppercase;">Acquisition</p>
+                <p style="font-size: 0.95rem;">Transmission IP & Matériel</p>
+            </div>
+
+            <div class="eco-card" style="text-align: center; align-items: center; border-color: #0153D4;">
+                <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: 0.5rem; border: 3px solid #0153D4;">
+                    <img src="bedis.jpg" alt="Bédis" style="width: 100%; height: 100%; object-fit: cover; background: #eee;">
+                </div>
+                <h3 style="margin: 0;">Bédis</h3>
+                <p style="color: #0153D4; font-weight: bold; font-size: 0.85rem; text-transform: uppercase;">Filtrage</p>
+                <p style="font-size: 0.95rem;">Traitement du Signal</p>
+            </div>
+
+            <div class="eco-card" style="text-align: center; align-items: center; border-color: var(--primary);">
+                <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: 0.5rem; border: 3px solid var(--primary);">
+                    <img src="jonathan.jpeg" alt="Jonathan" style="width: 100%; height: 100%; object-fit: cover; background: #eee;">
+                </div>
+                <h3 style="margin: 0;">Jonathan</h3>
+                <p style="color: var(--primary); font-weight: bold; font-size: 0.85rem; text-transform: uppercase;">Détection</p>
+                <p style="font-size: 0.95rem;">Algorithmes & Verrous Techniques</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ============================================ -->
+    <!-- FOOTER                                       -->
+    <!-- ============================================ -->
+    <footer role="contentinfo">
+        <div>
+            <h3>Nos réseaux</h3>
+            <nav aria-label="Réseaux sociaux">
+                <ul>
+                    <li><a href="https://instagram.com/skynium"><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+                    <li><a href="https://facebook.com/SkyniumRECONECT"><i class="fa-brands fa-facebook" aria-hidden="true"></i> Facebook</a></li>
+                    <li><a href="https://wa.me/33667225452"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+                </ul>
+            </nav>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-skynium-dark text-white py-10 border-t border-white/10">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <i class="ph-fill ph-leaf text-skynium-accent text-2xl"></i>
-                <span class="font-bold text-lg">NaturaLink</span>
-            </div>
-            <div class="text-gray-400 text-sm text-center md:text-right">
-                <p>&copy; 2026 Projet SAE 103 - IUT R&T.</p>
-                <p class="mt-1">Une initiative étudiante propulsée par <a href="https://skynium.fr"><span class="text-skynium-accent font-bold">Skynium ECOGREEN</span>.</a></p>
-            </div>
+        <div>
+            <h3>Informations</h3>
+            <nav aria-label="Informations légales">
+                <ul>
+                    <li><a href="https://skynium.fr/mentionslegales.html">Mentions Légales</a></li>
+                    <li><a href="https://skynium.fr/politiqueconfidentialite.html">Politique de Confidentialité</a></li>
+                    <li><a href="https://skynium.fr/accessibilite.html">Accessibilité</a></li>
+                    <li><a href="https://skynium.fr/souverainete.html">Souveraineté Numérique</a></li>
+                    <li><a href="https://skynium.fr/ecogreen.html">Skynium ECOGREEN</a></li>
+                    <li><a href="#">Projet NaturaLink</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div>
+            <h3>Contact</h3>
+            <p><a href="mailto:contact@skynium.fr"><i class="fa-solid fa-envelope" aria-hidden="true"></i> contact@skynium.fr</a></p>
+            <p><a href="sms:+33667225452"><i class="fa-solid fa-phone" aria-hidden="true"></i> +33 6 67 22 54 52</a></p>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Skynium. Tous droits réservés.
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
-    <script>
-        // Menu Mobile Toggle
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-        }
+    <!-- Scripts Skynium standard -->
+    <script>var FreeScoutW={s:{"color":"#1d0469","position":"br","locale":"fr","require":["name","email","phone"],"id":1681224262}};(function(d,e,s){if(d.getElementById("freescout-w"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="freescout-w";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","https://support.iris.skynium.fr/modules/chat/js/widget.js?v=2503");</script>
+    <script src="https://skynium.fr/ressources/accessibility.js"></script>
+    <script src="https://skynium.fr/ressources/skynium-data.js"></script>
+    <script src="https://skynium.fr/ressources/app.js"></script>
 
-        // Animation au scroll (Intersection Observer)
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Navbar transparency on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg');
-                nav.style.background = 'rgba(15, 41, 30, 0.95)';
-            } else {
-                nav.classList.remove('shadow-lg');
-                nav.style.background = 'rgba(15, 41, 30, 0.85)';
-            }
-        });
-    </script>
 </body>
 </html>

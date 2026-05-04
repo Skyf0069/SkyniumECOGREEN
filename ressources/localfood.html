@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalFood - Circuit court numérique & transparent</title>
+
+    <link rel="stylesheet" href="https://skynium.fr/ressources/style.css">
+    <link rel="stylesheet" href="https://skynium.fr/ressources/fontawesome/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="https://skynium.fr/ressources/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://skynium.fr/ressources/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="https://skynium.fr/ressources/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://skynium.fr/ressources/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Skynium" />
+    <link rel="manifest" href="https://skynium.fr/ressources/favicon/site.webmanifest" />
+
+    <style>
+        @property --primary { syntax: '<color>'; inherits: true; initial-value: #1E5631; }
+        @property --secondary { syntax: '<color>'; inherits: true; initial-value: #52B788; }
+        @property --tertiary { syntax: '<color>'; inherits: true; initial-value: #E76F51; }
+        @property --secondary-dark { syntax: '<color>'; inherits: true; initial-value: #2D6A4F; }
+
+        @keyframes lf-pulse {
+            0%, 100% {
+                --primary: #1E5631;
+                --secondary: #52B788;
+                --tertiary: #E76F51;
+                --secondary-dark: #2D6A4F;
+            }
+            40%, 60% {
+                --primary: #1B4332;
+                --secondary: #74C69D;
+                --tertiary: #F4A261;
+                --secondary-dark: #40916C;
+            }
+        }
+
+        :root {
+            animation: lf-pulse 12s infinite ease-in-out;
+        }
+
+        @keyframes sprout {
+            0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+            40%, 60% { transform: translateY(-6px) rotate(5deg) scale(1.1); }
+        }
+
+        #lf-hero-icon i {
+            animation: sprout 12s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        /* ── HERO ───────────────────────────────────────────────── */
+        .lf-hero {
+            text-align: center;
+            max-width: 960px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .lf-hero h1 {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.8rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.1;
+        }
+
+        .lf-hero h2 {
+            color: var(--tertiary);
+            font-size: 1.35rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .lf-hero p.intro {
+            font-size: 1.15rem;
+            color: #444;
+            line-height: 1.8;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        /* ── BADGES ODD ─────────────────────────────────────────── */
+        .lf-badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin: 2rem auto 0;
+        }
+
+        .lf-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            letter-spacing: 0.05em;
+        }
+
+        .lf-badge.alt { background: var(--secondary); color: #1B4332; }
+        .lf-badge.warn { background: var(--tertiary); color: white; }
+
+        /* ── GRILLE STANDARD ────────────────────────────────────── */
+        .eco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .eco-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius, 12px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-top: 5px solid var(--primary);
+        }
+
+        .eco-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+        }
+
+        .eco-card-icon { font-size: 2.5rem; margin-bottom: 0.25rem; }
+
+        .eco-card h3 { color: var(--primary); font-size: 1.35rem; }
+
+        .eco-card p, .eco-card ul {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .eco-card ul { padding-left: 1.4rem; }
+        .eco-card ul li { margin-bottom: 0.5rem; }
+        .eco-card a { font-weight: bold; text-decoration: underline; }
+
+        /* ── SECTION TITRE ──────────────────────────────────────── */
+        .lf-section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin: 4rem 0 0.75rem;
+        }
+
+        .lf-section-sub {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 2.5rem;
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* ── ALERTE PROBLÈME ────────────────────────────────────── */
+        .lf-alert {
+            background: #FFF5F5;
+            border: 2px solid #C1121F;
+            border-radius: 12px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .lf-alert .lf-alert-icon {
+            font-size: 2rem;
+            color: #C1121F;
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+        }
+
+        .lf-alert h3 { color: #C1121F; margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .lf-alert p  { color: #444; margin: 0; font-size: 0.98rem; line-height: 1.65; }
+
+        /* ── STAT GRANDE ────────────────────────────────────────── */
+        .lf-stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .lf-stat {
+            background: var(--primary);
+            border-radius: 14px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 6px 20px rgba(27, 67, 50, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .lf-stat:hover { transform: translateY(-4px); }
+        .lf-stat.alt { background: var(--tertiary); box-shadow: 0 6px 20px rgba(231,111,81,0.2); }
+        .lf-stat.mid { background: var(--secondary); color: #1B4332; box-shadow: 0 6px 20px rgba(82,183,136,0.25); }
+
+        .lf-stat-num {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .lf-stat-label { font-size: 0.9rem; opacity: 0.9; line-height: 1.4; }
+
+        /* ── PARCOURS ÉTAPES ────────────────────────────────────── */
+        .lf-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+            counter-reset: step;
+        }
+
+        .lf-step {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-bottom: 4px solid var(--secondary);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .lf-step:hover { transform: translateY(-4px); }
+
+        .lf-step-num {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin: 0 auto 1rem;
+        }
+
+        .lf-step h4 { color: var(--primary); font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .lf-step p  { font-size: 0.93rem; color: #555; line-height: 1.55; margin: 0; }
+
+        /* ── FEATURE DOUBLE ─────────────────────────────────────── */
+        .lf-feature-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 720px) {
+            .lf-feature-block { grid-template-columns: 1fr; }
+            .lf-hero h1 { font-size: 2.6rem; }
+            .lf-stat-num { font-size: 2.2rem; }
+        }
+
+        .lf-feature {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .lf-feature.red-border { border-left-color: #C1121F; }
+        .lf-feature.orange-border { border-left-color: var(--tertiary); }
+
+        .lf-feature h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .lf-feature h4 i { color: var(--secondary); }
+        .lf-feature h4.red i { color: #C1121F; }
+        .lf-feature h4.orange i { color: var(--tertiary); }
+
+        .lf-feature p, .lf-feature ul {
+            font-size: 0.97rem;
+            color: #555;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .lf-feature ul { padding-left: 1.2rem; }
+        .lf-feature ul li { margin-bottom: 0.4rem; }
+
+        /* ── VISION ─────────────────────────────────────────────── */
+        .lf-vision {
+            background: linear-gradient(135deg, rgba(30,86,49,0.06), rgba(82,183,136,0.08));
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+
+        .lf-vision h2 {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .lf-vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .lf-vision-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .lf-vision-item h4 {
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lf-vision-item p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── ODD BANNER ─────────────────────────────────────────── */
+        .lf-odd-banner {
+            background: var(--primary);
+            color: white;
+            border-radius: 14px;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .lf-odd-banner { grid-template-columns: 1fr; text-align: center; }
+        }
+
+        .lf-odd-num {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--secondary);
+        }
+
+        .lf-odd-banner h3 { font-size: 1.4rem; margin-bottom: 0.6rem; }
+
+        .lf-odd-banner p { font-size: 0.98rem; opacity: 0.88; line-height: 1.65; margin: 0; }
+
+        .lf-cibles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .lf-cible-badge {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 999px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* ── QUOTE ──────────────────────────────────────────────── */
+        .lf-quote {
+            background: #F0FBF4;
+            border-left: 5px solid var(--secondary);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #333;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .lf-quote cite {
+            display: block;
+            font-size: 0.88rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <button 
+        id="accessibility-button" 
+        aria-label="Ouvrir le panneau d'accessibilité"
+        aria-expanded="false"
+        aria-controls="accessibility-panel"
+    >
+        <i class="fas fa-universal-access" aria-hidden="true"></i>
+    </button>
+
+    <aside 
+        id="accessibility-panel" 
+        class="accessibility-panel"
+        role="dialog"
+        aria-labelledby="accessibility-title"
+        aria-modal="false"
+    >
+        <button class="close-btn" aria-label="Fermer le panneau d'accessibilité" id="close-panel-btn">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+
+        <h2 id="accessibility-title">Options d'accessibilité</h2>
+
+        <div class="accessibility-status" role="status" aria-live="polite">
+            <p><strong>Modes actifs :</strong> <span id="active-modes-count">Aucun</span></p>
+        </div>
+
+        <section class="accessibility-section">
+            <h3>Modes d'accessibilité</h3>
+            <div class="accessibility-option" data-mode="epilepsy-safe" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode sans échec pour l'épilepsie</strong>
+                    <p class="option-desc">Atténue la couleur et supprime les clignements</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="visually-impaired" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode malvoyant</strong>
+                    <p class="option-desc">Améliore les visuels du site</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="cognitive-disability" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode handicap cognitif</strong>
+                    <p class="option-desc">Aide à se concentrer sur un contenu spécifique</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="adhd-friendly" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode adapté au TDAH</strong>
+                    <p class="option-desc">Réduit les distractions</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="screen-reader" role="switch" aria-checked="false" tabindex="0">
+                <div>
+                    <strong>Mode Cécité</strong>
+                    <p class="option-desc">Optimisé pour lecteur d'écran</p>
+                </div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section class="accessibility-section">
+            <h3>Expérience lisible</h3>
+            <div class="slider-option">
+                <label for="font-size-slider">Taille de la police</label>
+                <div class="slider-container">
+                    <input type="range" id="font-size-slider" min="80" max="150" value="100" step="10" aria-label="Ajuster la taille de la police">
+                    <span id="font-size-value">100%</span>
+                </div>
+            </div>
+            <div class="slider-option">
+                <label for="line-height-slider">Hauteur de ligne</label>
+                <div class="slider-container">
+                    <input type="range" id="line-height-slider" min="1.2" max="2.5" value="1.6" step="0.1" aria-label="Ajuster la hauteur de ligne">
+                    <span id="line-height-value">1.6</span>
+                </div>
+            </div>
+            <div class="slider-option">
+                <label for="letter-spacing-slider">Espacement des lettres</label>
+                <div class="slider-container">
+                    <input type="range" id="letter-spacing-slider" min="0" max="5" value="0" step="0.5" aria-label="Ajuster l'espacement des lettres">
+                    <span id="letter-spacing-value">0px</span>
+                </div>
+            </div>
+            <div class="accessibility-option" data-mode="dyslexia-font" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Police adaptée à la dyslexie</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="highlight-headings" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Titres en surbrillance</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="highlight-links" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Liens en surbrillance</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="text-align-options">
+                <label>Alignement du texte</label>
+                <div class="button-group" role="radiogroup" aria-label="Alignement du texte">
+                    <button class="align-btn active" data-align="left" role="radio" aria-checked="true" aria-label="Aligner à gauche"><i class="fas fa-align-left" aria-hidden="true"></i></button>
+                    <button class="align-btn" data-align="center" role="radio" aria-checked="false" aria-label="Centrer"><i class="fas fa-align-center" aria-hidden="true"></i></button>
+                    <button class="align-btn" data-align="right" role="radio" aria-checked="false" aria-label="Aligner à droite"><i class="fas fa-align-right" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="accessibility-section">
+            <h3>Expérience visuellement agréable</h3>
+            <div class="button-group" role="radiogroup" aria-label="Mode de contraste">
+                <button class="contrast-btn active" data-contrast="normal" role="radio" aria-checked="true">Normal</button>
+                <button class="contrast-btn" data-contrast="dark" role="radio" aria-checked="false">Sombre</button>
+                <button class="contrast-btn" data-contrast="light" role="radio" aria-checked="false">Clair</button>
+                <button class="contrast-btn" data-contrast="high" role="radio" aria-checked="false">Élevé</button>
+            </div>
+            <div class="accessibility-option" data-mode="high-saturation" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Haute saturation</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="low-saturation" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Faible saturation</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="monochrome" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Monochrome</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section class="accessibility-section">
+            <h3>Orientation facile</h3>
+            <div class="accessibility-option" data-mode="highlight-cursor" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Mettre en surbrillance le curseur</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="big-cursor-dark" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Grand curseur sombre</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+            <div class="accessibility-option" data-mode="big-cursor-light" role="switch" aria-checked="false" tabindex="0">
+                <div><strong>Grand curseur clair</strong></div>
+                <div class="toggle-switch" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <button id="reset-accessibility-btn" class="reset-btn">
+            <i class="fas fa-undo" aria-hidden="true"></i> Réinitialiser tous les paramètres
+        </button>
+    </aside>
+
+    <header role="banner">
+        <div>
+            <img src="https://skynium.fr/ressources/logo.png" alt="Skynium - Retour à l'accueil"> 
+            <a href="https://skynium.fr"><p>SKYNIUM ECOGREEN</p></a>
+        </div>
+
+        <nav role="navigation" aria-label="Navigation principale">
+            <ul id="main-nav">
+                <li><a href="https://skynium.fr/assistance.html">Assistance</a></li>
+                <li><a href="https://ecogreen.skynium.fr/ressources/naturalink.html">Naturalink</a></li>
+                <li><a href="https://ecogreen.skynium.fr/ressources/sonde-meteo.html">Sonde Météo</a></li>
+                <li><a href="https://ecogreen.skynium.fr/ressources/localfood.html" style="color: var(--secondary); font-weight: bold;">LOCALFOOD</a></li>
+            </ul>
+            <button id="mobile-menu-icon" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="main-nav">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- CONTENU PRINCIPAL : LOCALFOOD                -->
+    <!-- ============================================ -->
+    <main id="main-content" role="main">
+
+        <!-- ── HERO ─────────────────────────────────────────────── -->
+        <section class="lf-hero">
+            <div id="lf-hero-icon" style="font-size: 4.5rem; margin-bottom: 1rem;">
+                <i class="fa-solid fa-wheat-awn" style="color: var(--secondary);"></i>
+            </div>
+            <h1>LocalFood</h1>
+            <h2>La plateforme web du circuit court transparent et équitable.</h2>
+            <p class="intro">
+                LocalFood connecte directement les petits producteurs locaux avec les consommateurs — sans intermédiaire,
+                sans commission cachée, avec une transparence totale sur l'origine et les méthodes de production.
+                Un projet né d'un constat simple : le numérique peut réparer ce que les grandes plateformes ont cassé.
+            </p>
+            <div class="lf-badge-row">
+                <span class="lf-badge">Projet IUT R&T</span>
+                <span class="lf-badge alt">Circuit court numérique</span>
+                <span class="lf-badge warn">ODD 2 — Faim Zéro</span>
+                <span class="lf-badge">Zéro commission</span>
+                <span class="lf-badge alt">Transparence totale</span>
+            </div>
+        </section>
+
+        <!-- ── SECTION 1 : POURQUOI ? ────────────────────────────── -->
+        <h2 id="pourquoi" class="lf-section-title" style="color: var(--primary);">1. Pourquoi LocalFood ?</h2>
+        <p class="lf-section-sub">
+            Aujourd'hui, les grandes plateformes numériques dominent la distribution alimentaire. Leurs logiques
+            économiques fragilisent les petits producteurs et dégradent la qualité nutritionnelle de ce que nous mangeons.
+            Ce n'est pas une opinion — c'est documenté.
+        </p>
+
+        <!-- Chiffre choc -->
+        <div class="lf-stat-row">
+            <div class="lf-stat">
+                <div class="lf-stat-num">733 M</div>
+                <div class="lf-stat-label">personnes souffrent de la faim dans le monde<br><em>(ONU, Rapport ODD 2023)</em></div>
+            </div>
+            <div class="lf-stat alt">
+                <div class="lf-stat-num">25 %</div>
+                <div class="lf-stat-label">de rabais imposé aux fournisseurs Whole Foods par Amazon après son rachat<br><em>(LSA Conso)</em></div>
+            </div>
+            <div class="lf-stat mid">
+                <div class="lf-stat-num">7,5 g</div>
+                <div class="lf-stat-label">de sucre ajouté par portion dans les céréales bébés Nestlé en Afrique — 0 g en Europe<br><em>(Public Eye, nov. 2025)</em></div>
+            </div>
+            <div class="lf-stat">
+                <div class="lf-stat-num">12</div>
+                <div class="lf-stat-label">maladies documentées liées aux ultra-transformés : obésité, diabète, cardio...<br><em>(INSERM / The Lancet, nov. 2025)</em></div>
+            </div>
+        </div>
+
+        <!-- Alertes documentées -->
+        <div class="lf-alert">
+            <div class="lf-alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div>
+                <h3>Amazon & Whole Foods — Cible ODD 2.3 contredite</h3>
+                <p>
+                    En 2017, Amazon rachète Whole Foods pour <strong>13,7 milliards de dollars</strong>. Résultat documenté : 
+                    baisses de prix de 3 à 5 % imposées aux fournisseurs, avec des rabais atteignant <strong>25 % du prix initial</strong>.
+                    La centralisation des achats a supprimé les acheteurs locaux région par région, faisant disparaître les petits 
+                    producteurs des rayons. Comme le résume un consultant cité par LSA Conso : 
+                    <em>« Les petites sociétés issues du circuit court ne peuvent pas s'aligner. »</em>
+                    L'ODD 2, cible 2.3, demande de doubler leurs revenus. C'est l'exact opposé.
+                </p>
+            </div>
+        </div>
+
+        <div class="lf-alert">
+            <div class="lf-alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div>
+                <h3>Nestlé — Double standard documenté par analyses de laboratoire (Cibles 2.1 & 2.2)</h3>
+                <p>
+                    En novembre 2025, l'ONG suisse Public Eye publie une enquête avec analyses de laboratoire indépendantes 
+                    sur les céréales bébés Cerelac de Nestlé dans <strong>20 pays africains</strong>. Résultat : 
+                    <strong>7,5 grammes de sucre ajouté par portion</strong> en Afrique, contre <strong>zéro gramme</strong> 
+                    pour le même produit vendu en Suisse et en Europe. Le Dr Andrew Miller, médecin à l'hôpital de Madwaleni 
+                    (Afrique du Sud), constate des retards de croissance : <em>« Les bébés souffrent de malnutrition non par manque de nourriture, 
+                    mais par manque de nourriture de qualité. »</em> 
+                    <strong>19 ONG africaines dans 13 pays</strong> ont signé une lettre ouverte dénonçant ces pratiques.
+                </p>
+            </div>
+        </div>
+
+        <div class="lf-quote">
+            Le problème central n'est pas l'absence de nourriture — c'est l'intermédiaire qui capte la valeur,
+            l'opacité sur ce qu'on mange, et les revenus qui ne reviennent jamais aux producteurs.
+            LocalFood attaque ces trois problèmes simultanément.
+        </div>
+
+        <!-- ── SECTION 2 : COMMENT ÇA MARCHE ────────────────────── -->
+        <h2 id="comment" class="lf-section-title" style="color: var(--secondary-dark);">2. Comment ça marche ?</h2>
+        <p class="lf-section-sub">
+            LocalFood fonctionne en deux faces miroir : le producteur qui publie en toute transparence,
+            et le client qui achète en toute confiance.
+        </p>
+
+        <section class="eco-grid">
+            <div class="eco-card" style="border-color: var(--primary);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-tractor"></i>
+                </div>
+                <h3>Côté Producteur</h3>
+                <p>Le producteur crée son profil gratuitement et liste ses produits au <strong>prix qu'il fixe lui-même</strong>. Zéro commission prélevée par la plateforme — 100 % du prix de vente lui revient.</p>
+                <ul style="margin-top: 0.75rem;">
+                    <li>Fixe ses propres tarifs librement</li>
+                    <li>Renseigne une <strong>fiche de transparence obligatoire</strong> (méthodes, intrants, label)</li>
+                    <li>Choisit livraison ou retrait sur place</li>
+                    <li>Gère ses commandes via un tableau de bord simple</li>
+                </ul>
+                <p style="margin-top: 0.75rem; font-size: 0.92rem; color: #888; font-style: italic;">
+                    La fiche de transparence n'est pas optionnelle — c'est la condition pour être référencé.
+                </p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--secondary);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </div>
+                <h3>Côté Client</h3>
+                <p>Le client parcourt une carte des producteurs locaux proches, consulte les fiches de transparence, et commande <strong>au prix direct</strong> — sans intermédiaire.</p>
+                <ul style="margin-top: 0.75rem;">
+                    <li>Carte interactive des producteurs par région</li>
+                    <li>Fiche de transparence lisible avant l'achat</li>
+                    <li>Paiement au prix fixé par le producteur</li>
+                    <li>Livraison optionnelle : frais <strong>reversés intégralement au producteur</strong></li>
+                    <li>Système d'avis et de notation communautaire</li>
+                </ul>
+                <p style="margin-top: 0.75rem; font-size: 0.92rem; color: #888; font-style: italic;">
+                    Chez Amazon, la logistique est une ligne de revenus pour Amazon. Ici, elle appartient au producteur.
+                </p>
+            </div>
+        </section>
+
+        <!-- Parcours client en étapes -->
+        <h3 style="text-align: center; color: var(--primary); font-size: 1.4rem; margin-bottom: 1.5rem;">
+            Le parcours client en 4 étapes
+        </h3>
+        <div class="lf-steps">
+            <div class="lf-step">
+                <div class="lf-step-num">1</div>
+                <h4>Recherche</h4>
+                <p>Parcourt la carte et filtre par produit, distance ou label.</p>
+            </div>
+            <div class="lf-step">
+                <div class="lf-step-num">2</div>
+                <h4>Consultation</h4>
+                <p>Lit la fiche transparence : méthodes, intrants, origine, label.</p>
+            </div>
+            <div class="lf-step">
+                <div class="lf-step-num">3</div>
+                <h4>Commande</h4>
+                <p>Passe commande au prix direct — 0 % de commission.</p>
+            </div>
+            <div class="lf-step">
+                <div class="lf-step-num">4</div>
+                <h4>Réception</h4>
+                <p>Choisit livraison (frais au producteur) ou retrait en direct.</p>
+            </div>
+        </div>
+
+        <!-- ── SECTION 3 : FONCTIONNALITÉS ──────────────────────── -->
+        <h2 id="fonctionnalites" class="lf-section-title" style="color: var(--tertiary);">3. Les fonctionnalités clés</h2>
+        <p class="lf-section-sub">
+            LocalFood ne se limite pas à une marketplace. C'est un outil de sensibilisation et de transparence alimentaire.
+        </p>
+
+        <div class="lf-feature-block">
+            <div class="lf-feature">
+                <h4><i class="fa-solid fa-magnifying-glass"></i> Module de lecture des ingrédients</h4>
+                <p>
+                    Chaque ingrédient affiché sur la plateforme est expliqué en <strong>langage courant</strong> — 
+                    aucun jargon chimique. Les additifs sont signalés, les sucres cachés identifiés, 
+                    les ultra-transformés détectés via la <strong>classification NOVA</strong> 
+                    (référence scientifique internationale, Monteiro et al., 2019).
+                </p>
+            </div>
+
+            <div class="lf-feature">
+                <h4><i class="fa-solid fa-file-contract"></i> Fiche transparence obligatoire</h4>
+                <p>
+                    Le producteur <strong>doit</strong> renseigner : comment le produit a été obtenu, 
+                    quelle eau utilisée, quels intrants ou pesticides, conditions d'élevage, 
+                    labels et certifications. Cette fiche est publique et vérifiable. 
+                    Sans elle : pas de référencement. Point.
+                </p>
+            </div>
+
+            <div class="lf-feature orange-border">
+                <h4 class="orange"><i class="fa-solid fa-star" style="color: var(--tertiary);"></i> Système de notation communautaire</h4>
+                <p>
+                    Les clients qui reçoivent leur commande laissent un avis vérifiable. 
+                    Un producteur qui trompe sur ses méthodes est rapidement signalé et noté en conséquence.
+                    La communauté devient elle-même un outil de contrôle — 
+                    comme sur les plateformes AMAP numériques.
+                </p>
+            </div>
+
+            <div class="lf-feature red-border">
+                <h4 class="red"><i class="fa-solid fa-shield-halved" style="color: #C1121F;"></i> Charte d'engagement légale</h4>
+                <p>
+                    En s'inscrivant, le producteur signe une charte. Déclarer faussement 
+                    « sans pesticides » ou « élevage plein air » sur une plateforme commerciale 
+                    constitue une <strong>pratique commerciale trompeuse</strong> (Code de la consommation, 
+                    art. L121-1). La loi protège là où la technologie ne peut pas tout garantir.
+                </p>
+            </div>
+
+            <div class="lf-feature">
+                <h4><i class="fa-solid fa-map-location-dot"></i> Carte géolocalisée & photos certifiées</h4>
+                <p>
+                    Les photos de l'exploitation sont <strong>horodatées et géolocalisées</strong> au moment 
+                    de l'upload. Un éleveur qui se prétend en plein air dans le Vaucluse 
+                    mais dont les photos viennent d'un hangar industriel — ça se détecte. 
+                    Ce n'est pas infaillible, mais c'est un filtre concret.
+                </p>
+            </div>
+
+            <div class="lf-feature">
+                <h4><i class="fa-solid fa-award"></i> Badge "Certifié" vs "Déclaratif"</h4>
+                <p>
+                    Si un producteur possède un <strong>label AB</strong> (Ecocert, Bureau Veritas), 
+                    un <strong>Label Rouge</strong> ou une certification <strong>HVE</strong>, 
+                    il peut l'uploader. LocalFood affiche alors un badge « Certifié » — 
+                    distinct du simple badge « Déclaratif ». Le client voit immédiatement 
+                    la différence entre celui qui prouve et celui qui affirme.
+                </p>
+            </div>
+        </div>
+
+        <!-- ── SECTION 4 : RÉALISABILITÉ IUT ────────────────────── -->
+        <h2 id="iut" class="lf-section-title" style="color: var(--primary);">4. Pourquoi c'est réalisable à l'IUT R&T</h2>
+        <p class="lf-section-sub">
+            LocalFood n'est pas un projet de startup à 10 millions d'euros. C'est une application web 
+            dont chaque brique correspond à des compétences enseignées dès la première année de R&T.
+        </p>
+
+        <section class="eco-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+            <div class="eco-card" style="border-color: var(--secondary);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <h3>Développement web</h3>
+                <p>HTML, CSS, JavaScript pour le front-end. PHP ou Python (Django/Flask) pour le back-end. 
+                Des stacks accessibles dès le S1 en R&T.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--primary);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <h3>Bases de données</h3>
+                <p>MySQL ou PostgreSQL pour stocker les profils producteurs, les produits, 
+                les commandes et les fiches de transparence. Cours de BDD disponibles dès le S2.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--tertiary);">
+                <div class="eco-card-icon" style="color: var(--tertiary);">
+                    <i class="fa-solid fa-plug"></i>
+                </div>
+                <h3>API REST</h3>
+                <p>Communication entre front-end et back-end via une API. 
+                Intégration d'une API cartographique (OpenStreetMap, Leaflet.js) 
+                pour la carte des producteurs — libre et gratuit.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--secondary);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+                <h3>Réseau & hébergement</h3>
+                <p>Déploiement sur un serveur (Apache, Nginx) avec HTTPS. 
+                Configuration DNS, certificat SSL. Tout ça s'enseigne en R&T 
+                et peut être hébergé sur un serveur de l'IUT ou chez un hébergeur vert.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--primary);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+                <h3>Application responsive</h3>
+                <p>Le site est conçu pour fonctionner sur mobile — 
+                essentiel pour les producteurs qui gèrent leurs annonces depuis leur champ 
+                et les clients qui commandent depuis leur téléphone.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--tertiary);">
+                <div class="eco-card-icon" style="color: var(--tertiary);">
+                    <i class="fa-solid fa-users-gear"></i>
+                </div>
+                <h3>Modération humaine au lancement</h3>
+                <p>À l'échelle d'un projet IUT local, le nombre de producteurs inscrits reste limité. 
+                Un administrateur humain (étudiant ou enseignant référent) 
+                peut vérifier manuellement les premières inscriptions — SIRET, 
+                existence réelle de l'exploitation, cohérence des déclarations.</p>
+            </div>
+        </section>
+
+        <!-- ── SECTION ODD ────────────────────────────────────────── -->
+        <h2 id="odd" class="lf-section-title" style="color: var(--secondary-dark);">5. Son lien direct avec l'ODD 2</h2>
+        <p class="lf-section-sub">
+            LocalFood n'est pas un projet numérique lambda. Chaque fonctionnalité répond 
+            directement à une cible précise de l'Objectif de Développement Durable n° 2.
+        </p>
+
+        <div class="lf-odd-banner">
+            <div class="lf-odd-num">ODD<br>2</div>
+            <div>
+                <h3>Faim Zéro — Éliminer la faim, assurer la sécurité alimentaire, améliorer la nutrition et promouvoir une agriculture durable</h3>
+                <p>
+                    LocalFood s'inscrit directement dans quatre des cibles de l'ODD 2. 
+                    Ce n'est pas un projet "écolo" de façade — c'est une réponse technique 
+                    et concrète à des problèmes documentés et chiffrés.
+                </p>
+                <div class="lf-cibles">
+                    <span class="lf-cible-badge">Cible 2.1 — Alimentation saine</span>
+                    <span class="lf-cible-badge">Cible 2.2 — Zéro malnutrition</span>
+                    <span class="lf-cible-badge">Cible 2.3 — Revenus des petits producteurs</span>
+                    <span class="lf-cible-badge">Cible 2.4 — Agriculture durable</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="eco-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="eco-card" style="border-color: var(--secondary);">
+                <div class="eco-card-icon" style="color: var(--secondary);">
+                    <i class="fa-solid fa-apple-whole"></i>
+                </div>
+                <h3>Cibles 2.1 & 2.2 — Nutrition</h3>
+                <p>Le module de lecture des ingrédients et les fiches de transparence permettent au consommateur 
+                de choisir une alimentation vraiment saine — pas celle que l'algorithme d'Amazon 
+                met en avant parce qu'elle est facile à livrer.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--primary);">
+                <div class="eco-card-icon" style="color: var(--primary);">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <h3>Cible 2.3 — Revenus des producteurs</h3>
+                <p>Zéro commission. Prix librement fixé. Frais de livraison reversés au producteur. 
+                C'est la réponse directe aux 25 % de rabais imposés par Amazon 
+                — et à la centralisation qui a tué le circuit court dans Whole Foods.</p>
+            </div>
+
+            <div class="eco-card" style="border-color: var(--tertiary);">
+                <div class="eco-card-icon" style="color: var(--tertiary);">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <h3>Cible 2.4 — Agriculture durable</h3>
+                <p>La fiche de transparence oblige les producteurs à décrire leurs méthodes. 
+                Les consommateurs qui valorisent les pratiques durables peuvent les identifier et les soutenir directement. 
+                Le marché récompense la durabilité — pas le volume industriel.</p>
+            </div>
+        </section>
+
+        <!-- ── VISION FUTURE ─────────────────────────────────────── -->
+        <div class="lf-vision">
+            <h2><i class="fa-solid fa-rocket" style="color: var(--secondary);"></i> Horizons et évolutions possibles</h2>
+            <div class="lf-vision-grid">
+                <div class="lf-vision-item">
+                    <h4><i class="fa-solid fa-mobile-screen" style="color: var(--secondary);"></i> Application mobile dédiée</h4>
+                    <p>Une app Android / iOS permettant aux producteurs de gérer leurs annonces depuis le terrain 
+                    et aux clients de commander en déplacement avec notifications de disponibilité.</p>
+                </div>
+                <div class="lf-vision-item">
+                    <h4><i class="fa-solid fa-calendar-check" style="color: var(--secondary);"></i> Système d'abonnement AMAP</h4>
+                    <p>Permettre aux clients de s'abonner à un panier hebdomadaire auprès d'un producteur — 
+                    sur le modèle des AMAP (Associations pour le Maintien d'une Agriculture Paysanne), 
+                    mais numérisé et accessible à tous.</p>
+                </div>
+                <div class="lf-vision-item">
+                    <h4><i class="fa-solid fa-qrcode" style="color: var(--secondary);"></i> QR Code de traçabilité</h4>
+                    <p>Un QR code imprimé sur chaque produit livré ou remis en main propre, 
+                    pointant directement vers la fiche de transparence du producteur. 
+                    La traçabilité visible en un scan.</p>
+                </div>
+                <div class="lf-vision-item">
+                    <h4><i class="fa-solid fa-chart-line" style="color: var(--secondary);"></i> Tableau de bord producteur</h4>
+                    <p>Statistiques de vente, historique des commandes, revenus générés mois par mois — 
+                    des outils simples qui aident les petits producteurs à gérer leur activité 
+                    sans expertise comptable.</p>
+                </div>
+                <div class="lf-vision-item">
+                    <h4><i class="fa-solid fa-school" style="color: var(--secondary);"></i> Partenariats IUT & cantines</h4>
+                    <p>LocalFood peut servir de plateforme d'approvisionnement pour les restaurants universitaires 
+                    et les cantines scolaires locales — les connectant directement aux producteurs 
+                    de la région, sans grossiste intermédiaire.</p>
+                </div>
+                <div class="lf-vision-item">
+                    <h4><i class="fa-solid fa-leaf" style="color: var(--secondary);"></i> Hébergement éco-responsable</h4>
+                    <p>La plateforme elle-même sera hébergée sur des serveurs verts — 
+                    Infomaniak (compensation CO₂ à 200 %), OVHcloud (refroidissement liquide), 
+                    ou IONOS (100 % énergies renouvelables). Cohérence totale avec les valeurs du projet.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer role="contentinfo">
+        <div>
+            <h3>Nos réseaux</h3>
+            <nav aria-label="Réseaux sociaux">
+                <ul>
+                    <li><a href="https://instagram.com/skynium"><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+                    <li><a href="https://facebook.com/SkyniumRECONECT"><i class="fa-brands fa-facebook" aria-hidden="true"></i> Facebook</a></li>
+                    <li><a href="https://wa.me/33667225452"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div>
+            <h3>Informations</h3>
+            <nav aria-label="Informations légales">
+                <ul>
+                    <li><a href="https://skynium.fr/mentionslegales.html">Mentions Légales</a></li>
+                    <li><a href="https://skynium.fr/politiqueconfidentialite.html">Politique de Confidentialité</a></li>
+                    <li><a href="https://skynium.fr/accessibilite.html">Accessibilité : totalement conforme</a></li>
+                    <li><a href="https://skynium.fr/souverainete.html">Souveraineté Numérique</a></li>
+                    <li><a href="https://skynium.fr/tarif.html">Tarif & Garantie</a></li>
+                    <li><a href="https://skynium.fr/plan-du-site.html">Plan du site</a></li>
+                    <li><a href="https://skynium.fr/horizon2027.html">Horizon 2027</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div>
+            <h3>Ecocystème Skynium</h3>
+            <nav aria-label="Informations légales">
+                <ul>
+                    <li><a href="https://my.skynium.fr">mySkynium</a></li>
+                    <li><a href="https://status.skynium.fr">Skynium STATUS</a></li>
+                    <li><a href="https://updates.skynium.fr">Skynium LOGS</a></li>
+                    <li><a href="https://ecogreen.skynium.fr">Skynium ECOGREEN</a></li>
+                    <li><a href="https://loyalty.skynium.fr">Skynium LOYALTY</a></li>
+                    <li><a href="https://petal.skynium.fr">Skynium PETAL</a></li>
+                    <li><a href="https://privacy.skynium.fr">Skynium PRIVACY</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div>
+            <h3>Contact</h3>
+            <p><a href="mailto:contact@skynium.fr"><i class="fa-solid fa-envelope" aria-hidden="true"></i> contact@skynium.fr</a></p>
+            <p><a href="sms:+33667225452"><i class="fa-solid fa-phone" aria-hidden="true"></i> +33 6 67 22 54 52</a></p>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Skynium. Tous droits réservés.
+        </div>
+    </footer>
+
+    <script>var FreeScoutW={s:{"color":"#1E5631","position":"br","locale":"fr","require":["name","email","phone"],"id":1681224262}};(function(d,e,s){if(d.getElementById("freescout-w"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="freescout-w";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","https://support.iris.skynium.fr/modules/chat/js/widget.js?v=2503");</script>
+    <script src="https://skynium.fr/ressources/accessibility.js"></script>
+    <script src="https://skynium.fr/ressources/skynium-data.js"></script>
+    <script src="https://skynium.fr/ressources/app.js"></script>
+
+</body>
+</html>

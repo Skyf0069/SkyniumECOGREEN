@@ -495,7 +495,7 @@
 
         <!-- HERO -->
         <section class="eco-hero">
-            <div class="badge-odd">Projet IUT R&T • SAE 204 • Semestre 2 • 10 mars → 5 juin 2026</div>
+            <div class="badge-odd">Projet IUT R&T • SAE 204 • Semestre 2 • 10 mars → 11 juin 2026</div>
             <div id="eco-icon" style="font-size: 4.5rem; margin-bottom: 1rem;">
                 <i class="fa-solid fa-temperature-half" style="color: var(--secondary);"></i>
             </div>
@@ -503,15 +503,13 @@
             <h2>Analyse et gestion thermique en milieu éducatif.</h2>
             <p class="intro">
                 L'objectif de ce projet est d'étudier la <strong>gestion thermique dans une salle de classe</strong>.
-                Les données environnementales (UV, luminosité, température, humidité, pression) sont captées par un microcontrôleur
+                Les données environnementales (UV et luminosité) sont captées par un microcontrôleur
                 STM32 WB55, transmises en Bluetooth Low Energy vers un Raspberry Pi, acheminées via MQTT vers un VPS,
                 stockées en base de données et visualisées sur Grafana et un afficheur M5Stack.
             </p>
             <!-- Statut global du projet -->
             <div style="display:flex; justify-content:center; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
-                <span class="badge-status badge-done"><i class="fa-solid fa-check" style="margin-right:5px;"></i>5 tâches terminées</span>
-                <span class="badge-status badge-todo"><i class="fa-solid fa-clock" style="margin-right:5px;"></i>2 tâches en cours</span>
-                <span class="badge-status badge-archived" style="background:#e2e3e5;color:#383d41;"><i class="fa-solid fa-box-archive" style="margin-right:5px;"></i>1 archivée</span>
+                <span class="badge-status badge-done" style="font-size:1rem; padding: 8px 20px;"><i class="fa-solid fa-circle-check" style="margin-right:8px;"></i>Projet terminé — 8/8 tâches</span>
             </div>
         </section>
 
@@ -561,7 +559,7 @@ Mesurer UV       Mesurer Temp.
             <div class="eco-card" style="border-color: #555;">
                 <div class="eco-card-icon" style="color: #555;"><i class="fa-solid fa-microchip"></i></div>
                 <h3>2× STM32 WB55 (Nucleo)</h3>
-                <p>Microcontrôleur principal du projet. Il lit les capteurs Grove (UV + lumière + température + humidité + pression) et émet les données via Bluetooth Low Energy sous le nom <code>Sonde_V3</code>. Bibliothèque STM32duinoBLE v1.4.1. Firmware BLE coprocesseur RF v16.12.0.27.</p>
+                <p>Microcontrôleur principal du projet. Il lit les capteurs Grove (UV + lumière) et émet les données via Bluetooth Low Energy sous le nom <code>Sonde_V3</code>. Bibliothèque STM32duinoBLE v1.4.1. Firmware BLE coprocesseur RF v16.12.0.27.</p>
                 <ul>
                     <li>ADC 12 bits (valeurs 0–4095)</li>
                     <li>Broche UV : <code>PA0</code> (capteur GUVA-S12D)</li>
@@ -573,12 +571,10 @@ Mesurer UV       Mesurer Temp.
             <div class="eco-card" style="border-color: var(--secondary); transform: scale(1.05); z-index: 1; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
                 <div class="eco-card-icon" style="color: var(--secondary);"><i class="fa-solid fa-leaf"></i></div>
                 <h3>Kit Environnement (prêté)</h3>
-                <p>Ensemble de capteurs analogiques et numériques montés sur shield :</p>
+                <p>Ensemble de capteurs analogiques montés sur shield :</p>
                 <ul>
                     <li><strong>Capteur UV Grove GUVA-S12D</strong> — sortie tension → indice UV 0–12 via table Seeed officielle</li>
                     <li><strong>Capteur de lumière Grove v1.2</strong> — luminosité en pourcentage</li>
-                    <li><strong>HTS221</strong> — température (°C) et humidité relative (%)</li>
-                    <li><strong>LPS22HB</strong> — pression atmosphérique (hPa)</li>
                     <li>2 câbles shield de connexion</li>
                 </ul>
             </div>
@@ -598,11 +594,12 @@ Mesurer UV       Mesurer Temp.
             <div class="eco-card" style="border-color: var(--primary);">
                 <div class="eco-card-icon" style="color: var(--primary);"><i class="fa-solid fa-desktop"></i></div>
                 <h3>Afficheur 2Core M5Stack</h3>
-                <p>Interface visuelle temps réel. Affiche UV, luminosité, température, humidité et pression. Passe en <strong>mode alerte (fond rouge)</strong> si la température dépasse 30°C.</p>
+                <p>Interface visuelle temps réel. Affiche l'indice UV et la luminosité. Passe en <strong>mode alerte</strong> si déconnecté du broker MQTT.</p>
                 <ul>
-                    <li>Bibliothèque M5Core2</li>
-                    <li>Reçoit les données via BLE (MQTT WiFi prévu)</li>
-                    <li>Interface designée par Unsal KADRI</li>
+                    <li>Connexion Wi-Fi → broker Mosquitto VPS</li>
+                    <li>Abonnement au topic <code>sonde/meteo</code></li>
+                    <li>Reconnexion automatique si perte réseau</li>
+                    <li>Interface designée et codée par Unsal KADRI</li>
                 </ul>
             </div>
 
@@ -644,13 +641,13 @@ Mesurer UV       Mesurer Temp.
                 <pre>
  ┌─────────────────────────────────────────────────────────────────────┐
  │  STM32 WB55                                                         │
- │  Capteurs : UV (GUVA-S12D) · Lumière · Temp. · Humidité · Pression │
- │  ↓ Émission BLE  (nom : "Sonde_V3", 5 caractéristiques GATT)       │
+ │  Capteurs : UV (GUVA-S12D) · Luminosité (Grove v1.2)               │
+ │  ↓ Émission BLE  (nom : "Sonde_V3", 2 caractéristiques GATT)       │
  └──────────────────────────────┬──────────────────────────────────────┘
                                 │  Bluetooth Low Energy
  ┌──────────────────────────────▼──────────────────────────────────────┐
  │  Raspberry Pi 3B+                                                   │
- │  Script ble-rpi.py (bleak) → lit les 5 chars GATT                  │
+ │  Script ble-rpi.py (bleak) → lit les 2 chars GATT                  │
  │  ↓ Publication MQTT  (topic : sonde/meteo)                          │
  │  ↓ Écriture CSV horodatée sur microSD 32 Go                        │
  └──────────────────────────────┬──────────────────────────────────────┘
@@ -669,9 +666,9 @@ Mesurer UV       Mesurer Temp.
         └──────────────────┬────────────────────────────┘
                            │
                   ┌────────▼────────┐       ┌─────────────────────────┐
-                  │  VM Grafana     │       │  Afficheur M5Stack      │
-                  │  Dashboards     │       │  Temps réel · Alerte    │
-                  │  port :3000     │       │  si Temp > 30°C         │
+                  │  VM Grafana     │       │  M5Stack (Wi-Fi MQTT)   │
+                  │  Dashboards     │       │  UV · Luminosité        │
+                  │  port :3000     │       │  Reconnexion auto       │
                   └─────────────────┘       └─────────────────────────┘
                            │
                   ┌────────▼────────┐
@@ -694,38 +691,29 @@ Mesurer UV       Mesurer Temp.
         <!-- ══════════════════════════════════════════════ -->
         <h2 class="section-title">4. Code Source</h2>
         <p class="section-subtitle">
-            Voici l'intégralité des scripts développés par l'équipe, dans leur version finale déposée sur HUBJ Teams.
+            Voici l'intégralité des scripts développés par l'équipe, dans leur version finale déposée sur HUBJ Teams le 11 juin 2026.
             Les données sensibles (identifiants, adresses réseau) ont été retirées.
         </p>
 
-        <!-- 4.1 temp2.ino -->
+        <!-- 4.1 helina.ino -->
         <div class="code-block-wrapper">
             <div class="code-block-header">
                 <i class="fa-solid fa-microchip"></i>
-                <span>temp2.ino — STM32 WB55 : acquisition + émission BLE</span>
+                <span>helina.ino — STM32 WB55 : acquisition UV + Lumière + émission BLE</span>
                 <span class="lang-badge">Arduino / C++</span>
-                <span class="author-tag">✍️ Unsal KADRI · Jonathan BALBAS — 09/06/2026</span>
+                <span class="author-tag">✍️ Unsal KADRI — 11/06/2026</span>
             </div>
-            <pre><code>#include &lt;STM32duinoBLE.h&gt;
-#include &lt;HTS221Sensor.h&gt;
-#include &lt;LPS22HBSensor.h&gt;
-#include &lt;Wire.h&gt;
+            <pre><code>// Projet : SAE 204 - Sonde Météo (Mode UV & Lumière)
+#include &lt;STM32duinoBLE.h&gt;
 
-// ⚠ Broches analogiques (A0 = UV, A1 = Luminosité)
-#define PIN_A A0
-#define PIN_B A1
+#define PIN_A A0   // Capteur UV  (GUVA-S12D)
+#define PIN_B A1   // Capteur Lumière (Grove v1.2)
 
-HTS221Sensor  HumTemp(&Wire);   // Température + Humidité
-LPS22HBSensor Pression(&Wire);  // Pression
-
-// ── Service BLE et 5 caractéristiques GATT ──────────────────────────
+// ── Service BLE et 2 caractéristiques GATT ──────────────────────────
 BLEService meteoService("19B10000-E8F2-537E-4F6C-D104768A1214");
 
 BLEFloatCharacteristic uvCharacteristic   ("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
 BLEFloatCharacteristic lightCharacteristic("19B10002-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
-BLEFloatCharacteristic humidCharacteristic("19B10003-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
-BLEFloatCharacteristic pressCharacteristic("19B10004-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
-BLEFloatCharacteristic tempCharacteristic ("19B10005-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
 
 // ── Table officielle Seeed GUVA-S12D : tension (mV) → indice UV ─────
 int tensionVersUVIndex(float mV) {
@@ -752,30 +740,11 @@ void setup() {
   Serial.begin(115200);
   unsigned long debut = millis();
   while (!Serial &amp;&amp; millis() - debut &lt; 3000);
-  Serial.println("\n=== SAE204 Sonde V3 — Démarrage ===");
+  Serial.println("\n=== SAE 204 Sonde V3 — Mode UV & Lumière ===");
 
   analogReadResolution(12); // ADC 12 bits → 0 à 4095
   pinMode(PIN_A, INPUT);
   pinMode(PIN_B, INPUT);
-  Wire.begin();
-
-  // Initialisation capteurs I2C
-  Pression.begin();
-  Pression.Enable();
-  Serial.println("[OK] LPS22HB (Pression) initialisé");
-
-  HumTemp.begin();
-  HumTemp.Enable();
-  Serial.println("[...] HTS221 : attente 2s de chauffe...");
-  delay(2000); // Stabilisation du capteur HTS221
-
-  uint8_t id = 0;
-  HumTemp.ReadID(&id);
-  if (id == 0xBC) {
-    Serial.println("[OK] HTS221 détecté et prêt !");
-  } else {
-    Serial.println("[ERREUR] HTS221 non détecté — vérifie le branchement X-NUCLEO");
-  }
 
   // Initialisation BLE
   if (!BLE.begin()) {
@@ -786,17 +755,10 @@ void setup() {
   BLE.setAdvertisedService(meteoService);
   meteoService.addCharacteristic(uvCharacteristic);
   meteoService.addCharacteristic(lightCharacteristic);
-  meteoService.addCharacteristic(humidCharacteristic);
-  meteoService.addCharacteristic(pressCharacteristic);
-  meteoService.addCharacteristic(tempCharacteristic);
   BLE.addService(meteoService);
 
-  // Valeurs initiales à 0
   uvCharacteristic.writeValue(0.0);
   lightCharacteristic.writeValue(0.0);
-  humidCharacteristic.writeValue(0.0);
-  pressCharacteristic.writeValue(0.0);
-  tempCharacteristic.writeValue(0.0);
   BLE.advertise();
   Serial.println("[OK] BLE actif — En attente de connexion...");
 }
@@ -808,35 +770,23 @@ void loop() {
     Serial.println(central.address());
 
     while (central.connected()) {
-      // Lecture brute
       float rawA = lireMoyenne(PIN_A, 10);
       float rawB = lireMoyenne(PIN_B, 10);
 
-      // Conversion UV (A0)
-      float mV_A    = rawA * (3300.0 / 4095.0);
+      float mV_A     = rawA * (3300.0 / 4095.0);
       float indiceUV = (float)tensionVersUVIndex(mV_A);
       float lumPct   = (rawB / 4095.0) * 100.0;
-
-      // Capteurs I2C
-      float temp = 0, humid = 0, press = 0;
-      HumTemp.GetTemperature(&temp);
-      HumTemp.GetHumidity(&humid);
-      Pression.GetPressure(&press);
 
       // Envoi BLE
       uvCharacteristic.writeValue(indiceUV);
       lightCharacteristic.writeValue(lumPct);
-      humidCharacteristic.writeValue(humid);
-      pressCharacteristic.writeValue(press);
-      tempCharacteristic.writeValue(temp);
 
       // Diagnostic série
-      Serial.println("─────────────────────────────────");
+      Serial.println("─────────────────────────────────────────");
+      Serial.print("A0 brut: "); Serial.print(rawA, 0);
+      Serial.print(" | A1 brut: "); Serial.println(rawB, 0);
       Serial.print("UV (A0): "); Serial.print(indiceUV, 0);
       Serial.print(" | Lum (A1): "); Serial.print(lumPct, 1); Serial.println("%");
-      Serial.print("Temp: "); Serial.print(temp, 1); Serial.print("°C");
-      Serial.print(" | Hum: "); Serial.print(humid, 1); Serial.print("%");
-      Serial.print(" | Press: "); Serial.print(press, 1); Serial.println(" hPa");
       delay(1000);
     }
     Serial.println("Déconnecté.");
@@ -844,7 +794,153 @@ void loop() {
 }</code></pre>
         </div>
 
-        <!-- 4.2 ble-rpi.py -->
+        <!-- 4.2 m5stack.ino -->
+        <div class="code-block-wrapper" style="margin-top:2rem;">
+            <div class="code-block-header">
+                <i class="fa-solid fa-desktop"></i>
+                <span>m5stack.ino — M5Core2 : affichage Wi-Fi + MQTT</span>
+                <span class="lang-badge">Arduino / C++</span>
+                <span class="author-tag">✍️ Unsal KADRI — 11/06/2026</span>
+            </div>
+            <pre><code>// Auteur : Unsal KADRI
+// Projet : SAE 204 - Affichage Météo sur M5Core2 (Wi-Fi + MQTT VPS)
+#include &lt;M5Core2.h&gt;
+#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+
+// --- Configuration Réseau Wi-Fi ---
+const char* ssid     = "VOTRE_SSID";      // Remplacer par votre réseau
+const char* password = "VOTRE_PASSWORD";  // Remplacer par votre mot de passe
+
+// --- Configuration MQTT (Mosquitto sur VPS) ---
+const char* mqtt_server = "ADRESSE_VPS";  // IP du VPS Ionos
+const int   mqtt_port   = 1883;
+const char* mqtt_user   = "sae204";
+const char* mqtt_pass   = "VOTRE_PASS";   // Mot de passe MQTT
+
+// --- Topic MQTT ---
+const char* topic_meteo = "sonde/meteo";
+
+WiFiClient   espClient;
+PubSubClient client(espClient);
+
+// --- Interface Graphique ---
+void dessinerInterface() {
+  M5.Lcd.clear(BLACK);
+  M5.Lcd.setTextSize(2);
+
+  // Bandeau Titre
+  M5.Lcd.fillRect(0, 0, 320, 30, BLUE);
+  M5.Lcd.setTextColor(WHITE, BLUE);
+  M5.Lcd.setCursor(10, 5);
+  M5.Lcd.print("Sonde Meteo V3 - R&T");
+
+  // Labels fixes
+  M5.Lcd.setTextColor(YELLOW, BLACK);
+  M5.Lcd.setCursor(20, 80);
+  M5.Lcd.print("Indice UV  :");
+  M5.Lcd.setTextColor(CYAN, BLACK);
+  M5.Lcd.setCursor(20, 140);
+  M5.Lcd.print("Luminosite :");
+}
+
+// --- Callback : déclenché à chaque message MQTT reçu ---
+void callback(char* topic, byte* payload, unsigned int length) {
+  // Reconstruction du message texte
+  String message = "";
+  for (int i = 0; i &lt; length; i++) {
+    message += (char)payload[i];
+  }
+  Serial.print("Message recu [");
+  Serial.print(topic);
+  Serial.print("] : ");
+  Serial.println(message);
+
+  // Traitement uniquement sur le bon topic
+  if (String(topic) == topic_meteo) {
+    int indexVirgule = message.indexOf(',');
+    if (indexVirgule != -1) {
+      // Découpage  "UV:4,LUM:36.3"
+      String partieUV  = message.substring(0, indexVirgule);
+      String partieLum = message.substring(indexVirgule + 1);
+      partieUV.replace("UV:", "");
+      partieLum.replace("LUM:", "");
+
+      // Mise à jour de l'écran
+      M5.Lcd.fillRect(180, 80,  100, 30, BLACK);
+      M5.Lcd.setCursor(180, 80);
+      M5.Lcd.setTextColor(YELLOW, BLACK);
+      M5.Lcd.print(partieUV);
+
+      M5.Lcd.fillRect(180, 140, 100, 30, BLACK);
+      M5.Lcd.setCursor(180, 140);
+      M5.Lcd.setTextColor(CYAN, BLACK);
+      M5.Lcd.print(partieLum);
+      M5.Lcd.print(" %");
+    } else {
+      Serial.println("Format non reconnu (virgule manquante).");
+    }
+  }
+}
+
+// --- Reconnexion MQTT automatique ---
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("Connexion au broker Mosquitto...");
+    M5.Lcd.fillRect(0, 210, 320, 30, BLACK);
+    M5.Lcd.setTextColor(RED, BLACK);
+    M5.Lcd.setCursor(10, 215);
+    M5.Lcd.print("MQTT Deconnecte...");
+
+    if (client.connect("M5Core2_sae204", mqtt_user, mqtt_pass)) {
+      Serial.println("Connecte !");
+      M5.Lcd.fillRect(0, 210, 320, 30, BLACK);
+      M5.Lcd.setTextColor(GREEN, BLACK);
+      M5.Lcd.setCursor(10, 215);
+      M5.Lcd.print("MQTT Connecte (VPS) !");
+      client.subscribe(topic_meteo);
+    } else {
+      Serial.print("Echec, code : ");
+      Serial.print(client.state());
+      Serial.println(" → Nouvel essai dans 5s");
+      delay(5000);
+    }
+  }
+}
+
+void setup() {
+  M5.begin();
+  dessinerInterface();
+
+  M5.Lcd.setTextColor(WHITE, BLACK);
+  M5.Lcd.setCursor(10, 215);
+  M5.Lcd.print("Connexion Wi-Fi...");
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  M5.Lcd.fillRect(0, 210, 320, 30, BLACK);
+  M5.Lcd.setTextColor(GREEN, BLACK);
+  M5.Lcd.setCursor(10, 215);
+  M5.Lcd.print("Wi-Fi OK !");
+  delay(1500);
+
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+}
+
+void loop() {
+  M5.update();
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+}</code></pre>
+        </div>
+
+        <!-- 4.3 ble-rpi.py -->
         <div class="code-block-wrapper" style="margin-top:2rem;">
             <div class="code-block-header">
                 <i class="fa-brands fa-python"></i>
@@ -861,12 +957,9 @@ from bleak import BleakClient, BleakScanner
 DEVICE_NAME     = "Sonde_V3"
 UV_CHAR_UUID    = "19B10001-E8F2-537E-4F6C-D104768A1214"
 LIGHT_CHAR_UUID = "19B10002-E8F2-537E-4F6C-D104768A1214"
-HUMID_CHAR_UUID = "19B10003-E8F2-537E-4F6C-D104768A1214"
-PRESS_CHAR_UUID = "19B10004-E8F2-537E-4F6C-D104768A1214"
-TEMP_CHAR_UUID  = "19B10005-E8F2-537E-4F6C-D104768A1214"
 
 # ── Configuration MQTT ───────────────────────────────────────────────
-MQTT_BROKER = "localhost"   # Remplacé par l'IP du VPS Ionos en prod
+MQTT_BROKER = "localhost"   # IP du VPS Ionos en prod
 MQTT_PORT   = 1883
 
 try:
@@ -875,7 +968,6 @@ except AttributeError:
     mqtt_client = mqtt.Client()
 
 async def main():
-    # Connexion MQTT
     try:
         mqtt_client.connect(MQTT_BROKER, MQTT_PORT, 60)
         mqtt_client.loop_start()
@@ -884,7 +976,6 @@ async def main():
         print(f"❌ Erreur MQTT : {e}")
         return
 
-    # Scan BLE
     print(f"🔍 Recherche de la sonde BLE '{DEVICE_NAME}'...")
     devices = await BleakScanner.discover(timeout=10.0)
 
@@ -902,32 +993,20 @@ async def main():
     print(f"✅ Sonde trouvée ! Connexion BLE en cours...")
 
     async with BleakClient(target_device, timeout=20.0) as client:
-        print("🚀 Connecté ! Transfert des 5 capteurs vers Mosquitto...")
+        print("🚀 Connecté ! Transfert des données vers Mosquitto...")
 
         while True:
             try:
-                # Lecture des 5 caractéristiques GATT
+                # Lecture des 2 caractéristiques GATT
                 uv_bytes    = await client.read_gatt_char(UV_CHAR_UUID)
                 light_bytes = await client.read_gatt_char(LIGHT_CHAR_UUID)
-                humid_bytes = await client.read_gatt_char(HUMID_CHAR_UUID)
-                press_bytes = await client.read_gatt_char(PRESS_CHAR_UUID)
-                temp_bytes  = await client.read_gatt_char(TEMP_CHAR_UUID)
 
                 # Décodage float little-endian
                 uv_val    = struct.unpack('&lt;f', uv_bytes)[0]
                 light_val = struct.unpack('&lt;f', light_bytes)[0]
-                humid_val = struct.unpack('&lt;f', humid_bytes)[0]
-                press_val = struct.unpack('&lt;f', press_bytes)[0]
-                temp_val  = struct.unpack('&lt;f', temp_bytes)[0]
 
-                # Formatage payload
-                payload = (
-                    f"UV:{uv_val:.0f},"
-                    f"LUM:{light_val:.1f},"
-                    f"HUM:{humid_val:.1f},"
-                    f"PRESS:{press_val:.1f},"
-                    f"TEMP:{temp_val:.1f}"
-                )
+                # Formatage payload → "UV:4,LUM:36.3"
+                payload = f"UV:{uv_val:.0f},LUM:{light_val:.1f}"
                 mqtt_client.publish("sonde/meteo", payload)
                 print(f"[MQTT ✅] {payload}")
 
@@ -940,7 +1019,7 @@ async def main():
 asyncio.run(main())</code></pre>
         </div>
 
-        <!-- 4.3 vps-bridge.py -->
+        <!-- 4.4 vps-bridge.py -->
         <div class="code-block-wrapper" style="margin-top:2rem;">
             <div class="code-block-header">
                 <i class="fa-brands fa-python"></i>
@@ -951,7 +1030,7 @@ asyncio.run(main())</code></pre>
             <pre><code>#!/usr/bin/env python3
 """
 SAE 204 — Monitoring VPS Mosquitto
-Affiche en temps réel les données reçues du RPi et les dispatche aux VMs.
+Affiche en temps réel les données reçues du RPi.
 Jonathan BALBAS
 """
 import paho.mqtt.client as mqtt
@@ -960,7 +1039,7 @@ from datetime import datetime
 MQTT_HOST  = "localhost"
 MQTT_PORT  = 1883
 MQTT_TOPIC = "sonde/meteo"
-# Note : les identifiants MQTT sont définis dans les variables d'environnement
+# Identifiants définis via variables d'environnement sur le VPS
 
 compteur = 0
 
@@ -969,7 +1048,7 @@ def on_connect(client, userdata, connect_flags, reason_code, properties=None):
         print("╔══════════════════════════════════════════════════╗")
         print("║      SAE204 — Monitoring VPS Mosquitto           ║")
         print("╚══════════════════════════════════════════════════╝")
-        print(f"[✅] Connecté au broker local ({MQTT_HOST}:{MQTT_PORT})")
+        print(f"[✅] Connecté au broker ({MQTT_HOST}:{MQTT_PORT})")
         client.subscribe(MQTT_TOPIC)
         print(f"[📡] En écoute sur : {MQTT_TOPIC}")
         print("[⏳] En attente des données du RPi...\n")
@@ -984,20 +1063,14 @@ def on_message(client, userdata, msg):
 
     try:
         parties = dict(p.split(":") for p in payload.split(","))
-        uv    = parties.get("UV",    "—")
-        lum   = parties.get("LUM",   "—")
-        hum   = parties.get("HUM",   "—")
-        press = parties.get("PRESS", "—")
-        temp  = parties.get("TEMP",  "—")
+        uv  = parties.get("UV",  "—")
+        lum = parties.get("LUM", "—")
 
         print(f"┌─ [{ts}] Message #{compteur} reçu du RPi ──────────────")
         print(f"│  📦 Payload brut  : {payload}")
         print(f"│")
         print(f"│  ☀️  UV Index      : {uv}")
         print(f"│  💡 Luminosité    : {lum}%")
-        print(f"│  💧 Humidité      : {hum}%")
-        print(f"│  🌡️  Température   : {temp}°C")
-        print(f"│  🔵 Pression      : {press} hPa")
         print(f"│")
         print(f"│  → Dispatché aux VMs (MariaDB, InfluxDB) ✅")
         print(f"│  → Dispatché au M5Stack (WiFi MQTT)      ✅")
@@ -1128,14 +1201,27 @@ client.loop_forever()</code></pre>
 
             <div class="timeline-item">
                 <div class="timeline-date">📅 Semaine 5 — 8 au 10 juin 2026</div>
-                <h4>Version finale · Sonde_V3 · Documentation</h4>
+                <h4>Codes finaux · Documentation wiki</h4>
                 <ul>
                     <li><strong>[Jonathan — 08/06]</strong> Dépôt de <code>vps-bridge.py</code> (monitoring Mosquitto en temps réel).</li>
-                    <li><strong>[Unsal — 08/06]</strong> Finalisation de <code>ble-rpi.py</code> — ajout des 3 nouvelles caractéristiques (humidité, pression, température).</li>
-                    <li><strong>[Unsal — 09/06]</strong> Dépôt du code STM32 final <code>temp2.ino</code> (Sonde_V3, 5 capteurs, HTS221 + LPS22HB + Grove).</li>
-                    <li><strong>[Jonathan — 09/06]</strong> Ajustements finaux sur <code>temp2.ino</code> et <code>vps-bridge.py</code>.</li>
+                    <li><strong>[Unsal — 08/06]</strong> Finalisation de <code>ble-rpi.py</code>.</li>
+                    <li><strong>[Unsal — 09/06]</strong> Dépôt du code STM32 <code>temp2.ino</code> (Sonde_V3).</li>
+                    <li><strong>[Jonathan — 09/06]</strong> Ajustements finaux sur les scripts STM32 et <code>vps-bridge.py</code>.</li>
                     <li>Mise à jour du wiki Benelos — documentation complète des parties Programmer et Administrer.</li>
                     <li><strong>[10/06/2026]</strong> Rapport PDF généré et diffusé à tous les membres via HUBJ.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item" style="border-left-color: var(--primary);">
+                <div class="timeline-date">📅 Semaine 6 — 11 juin 2026 · Clôture du projet</div>
+                <h4>Soutenance · Livraison finale · Projet terminé ✅</h4>
+                <ul>
+                    <li><strong>[Unsal — 11/06 matin]</strong> Dépôt de <code>m5stack.ino</code> — version finale de l'afficheur M5Core2 (Wi-Fi + MQTT VPS, reconnexion automatique, interface UV + Luminosité).</li>
+                    <li><strong>[Unsal — 11/06 matin]</strong> Mise à jour finale de <code>helina.ino</code> — version propre avec uniquement UV et Luminosité via BLE.</li>
+                    <li><strong>[Jonathan — 11/06]</strong> Suppression de <code>temp2.ino</code> (remplacé par <code>helina.ino</code> version finale).</li>
+                    <li><strong>[Helina &amp; Unsal — 11/06]</strong> Réalisation des wikis Benelos et Trappist — documentation finale partagée.</li>
+                    <li><strong>[11/06/2026]</strong> Soutenance orale du projet SAE204 — présentation de 30 minutes + démonstration.</li>
+                    <li><strong>[Jonathan — 11/06 11:42]</strong> Projet marqué comme <strong>Terminé</strong> sur HUBJ Teams — 8/8 tâches à 100%.</li>
                 </ul>
             </div>
 
@@ -1209,7 +1295,7 @@ client.loop_forever()</code></pre>
         <!-- 8. ÉTAT DES TÂCHES                            -->
         <!-- ══════════════════════════════════════════════ -->
         <h2 class="section-title" style="margin-top:5rem;">8. État des tâches (HUBJ Teams)</h2>
-        <p class="section-subtitle">Suivi agile du projet — 5/8 tâches terminées au 10 juin 2026.</p>
+        <p class="section-subtitle">Projet <strong>terminé</strong> le 11 juin 2026 — 8/8 tâches à 100%.</p>
 
         <div class="tasks-grid" style="max-width:1000px; margin:0 auto 4rem auto;">
             <div class="task-card">
@@ -1217,7 +1303,7 @@ client.loop_forever()</code></pre>
                 <div>
                     <div class="task-title">Hardware & Acquisition</div>
                     <div class="task-assignee">Helina ABDALLAH</div>
-                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
@@ -1225,7 +1311,7 @@ client.loop_forever()</code></pre>
                 <div>
                     <div class="task-title">Connection de la carte à l'ordinateur</div>
                     <div class="task-assignee">Unsal, Helina, Jonathan</div>
-                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
@@ -1233,7 +1319,7 @@ client.loop_forever()</code></pre>
                 <div>
                     <div class="task-title">Refaire les capteurs (Sonde_V3)</div>
                     <div class="task-assignee">Jonathan, Unsal, Helina</div>
-                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
@@ -1241,7 +1327,7 @@ client.loop_forever()</code></pre>
                 <div>
                     <div class="task-title">Revoir Mosquitto RPi → VPS → VMs</div>
                     <div class="task-assignee">Jonathan BALBAS</div>
-                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
@@ -1249,31 +1335,31 @@ client.loop_forever()</code></pre>
                 <div>
                     <div class="task-title">Suivi Jonathan</div>
                     <div class="task-assignee">Jonathan BALBAS</div>
-                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
-                <div class="task-icon">🖥️</div>
+                <div class="task-icon">✅</div>
                 <div>
                     <div class="task-title">Designer UI / Affichage M5Stack</div>
                     <div class="task-assignee">Unsal KADRI</div>
-                    <span class="badge-status badge-todo" style="margin-top:6px;display:inline-block;">À faire</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
-                <div class="task-icon">📝</div>
+                <div class="task-icon">✅</div>
                 <div>
-                    <div class="task-title">Faire le wiki (Trappist)</div>
+                    <div class="task-title">Faire le wiki (Trappist + Benelos)</div>
                     <div class="task-assignee">Helina, Unsal</div>
-                    <span class="badge-status badge-todo" style="margin-top:6px;display:inline-block;">À faire</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
             <div class="task-card">
-                <div class="task-icon">📦</div>
+                <div class="task-icon">✅</div>
                 <div>
                     <div class="task-title">Infrastructure & Stockage</div>
                     <div class="task-assignee">Jonathan BALBAS</div>
-                    <span class="badge-status badge-archived" style="margin-top:6px;display:inline-block;">Archivée</span>
+                    <span class="badge-status badge-done" style="margin-top:6px;display:inline-block;">Terminée · 100%</span>
                 </div>
             </div>
         </div>
@@ -1359,7 +1445,6 @@ client.loop_forever()</code></pre>
                     <li><a href="https://ecogreen.skynium.fr">Skynium ECOGREEN</a></li>
                     <li><a href="https://loyalty.skynium.fr">Skynium LOYALTY</a></li>
                     <li><a href="https://petal.skynium.fr">Skynium PETAL</a></li>
-                    <li><a href="https://e-reservation.skynium.fr">Skynium E-RESERVATION</a></li>
                     <li><a href="https://privacy.skynium.fr">Skynium PRIVACY</a></li>
                 </ul>
             </nav>
